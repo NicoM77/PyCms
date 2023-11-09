@@ -1,0 +1,8 @@
+{
+    "home":{
+        "module":[{"hero":"1"}, {"about":"2"}]
+    },
+    "header":{
+        "list":[{"Startseite":"/"},{"BAUM":"https://youtube.com"}]
+    }
+}

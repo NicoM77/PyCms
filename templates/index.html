@@ -1,0 +1,12 @@
+{% extends "base.html" %} 
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    {% for modul_counter in module_list_len %}
+        {% if module_id[modul_counter] in module_content.keys() %}
+            {% with module_content=module_content[module_id[modul_counter]]  %}
+                {% include 'module/' ~ module_name[modul_counter] ~ '.html' %}
+            {% endwith %}
+        {% endif %}
+    {% endfor %}
+{% endblock %}
