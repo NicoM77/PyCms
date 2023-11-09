@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>LOGIN</title>
+</head>
+<body>
+
+    <main class="">
+
+      <form class="box" action="#" method="post">
+        <div class="box__login-text"><h1>Login</h1></div>
+        <input type="text" class="box__input" name="username" placeholder="Username">
+        <input type="password" class="box__input" name="password" placeholder="Password">
+        <!--<input type="password" class="box__input" name="pw" placeholder="Password"> -->
+        <input type="submit" class="box__submit" name="submit" value="submit">
+        <div id="error-message" style="color: red;"></div>
+
+      </form>
+          
+          
+          
+  </body>
+<style>
+    @keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  50% { transform: translateX(10px); }
+  75% { transform: translateX(-10px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.5s;
+}
+body {
+  margin: 0px;
+  color: black;
+  font-family: Helvetica;
+  font-size: 100%;
+  background-color: #34495e;
+}
+
+.box{
+  width: 300px;
+  padding: 40px;
+  position: absolute;
+  border-radius: 25px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background: #191919;
+  text-align: center;
+}
+.untertitel{
+  color: aliceblue;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.box h1{
+  color: white;
+  text-transform: uppercase;
+  font-weight: 500;
+  
+}
+.box input[type = "text"],.box input[type = "password"]{
+  border:0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #3498db;
+  padding: 14px 10px;
+  width: 200px;
+  outline: none;
+  color: white;
+  border-radius: 24px;
+  transition: 0.25s;
+}
+.box input[type = "text"]:focus,.box input[type = "password"]:focus{
+  width: 280px;
+  border-color: #2ecc71;
+}
+.box input[type = "submit"]{
+  border:0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #2ecc71;
+  padding: 14px 40px;
+  outline: none;
+  color: white;
+  border-radius: 24px;
+  transition: 0.25s;
+  cursor: pointer;
+}
+.box input[type = "submit"]:hover{
+  background: #2ecc71;
+}
+</style>
+
+<script>
+    // Funktion zum Schütteln der Eingabefelder
+function shakeInputFields() {
+  const inputs = document.querySelectorAll(".box__input");
+
+  // Füge die CSS-Klasse "shake" zu jedem Eingabefeld hinzu
+  inputs.forEach(input => {
+    input.classList.add("shake");
+    input.addEventListener("animationend", () => {
+      // Entferne die CSS-Klasse "shake" nach der Animation
+      input.classList.remove("shake");
+    });
+  });
+}
+
+// Trigger-Funktion, z.B. bei einem Fehler
+function triggerShake() {
+  shakeInputFields();
+}
+
+
+</script>
+<script>
+  var errorMessage = document.getElementById("error-message");
+
+  document.querySelector("form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    var username = document.querySelector('input[name="username"]').value;
+    var password = document.querySelector('input[name="password"]').value;
+
+    try {
+        var response = await fetch("/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password }),
+        });
+        if (response.status === 200) {
+            window.location.href = "/cms";
+        } else {
+            if (response.status === 400) {
+                console.error("Ungültige Anmeldeinformationen");
+                document.querySelector('input[name="password"]').value = ""
+                triggerShake();
+            }
+        }
+    } catch (error) {
+        console.error("Ein Fehler ist aufgetreten:", error);
+        // Hier können Sie den Fehler entsprechend behandeln, z.B. Anzeige einer Fehlermeldung
+    }
+});
+
+</script>
+    </main>
+</body>
+</html>

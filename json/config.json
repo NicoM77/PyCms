@@ -1,0 +1,18 @@
+{
+  "module_templates": {
+    "hero": {
+      "background_img": "img",
+      "title_1": "text",
+      "text_1": "large_text",
+      "link_text_1": "text",
+      "link_url_1": "url",
+      "title_2": "text",
+      "text_2": "large_text",
+      "link_text_2": "text",
+      "link_url_2": "url"
+    }
+  },
+  "temp": {
+    "Test": "2a03e43a0979af71844c709f95cd3b8ac5d35c22dbb797b31d9a1e15e61a4b0518933115ccacd090d7c34dcda335d973c5cbd056ecb662b62fd0c9001b8cf839ab5426db999633ebd7b6f2713256705ff5c4e5c83334c209d0f761c4f50ec0b8cdfe0088b32a107312e9f95bb937f65bb463d52282123e50f8894972802bda7d"
+  }
+}

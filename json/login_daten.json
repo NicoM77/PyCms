@@ -1,0 +1,8 @@
+{
+    "login":{
+        "Test":{
+            "pw": "Test",
+            "permissions":9
+        }
+    }
+}
