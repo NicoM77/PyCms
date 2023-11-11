@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} </title>
+    <script src="{{ url_for('static', filename='fontawesomefree/js/all.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet/cms.css') }}">
+</head>
+<body>
+
+
+<div style="display: flex; flex-direction: row; ">
+    <div style="display: block; ">
+        
+        {% with user_data=user_data, module_content = module_content, pages =pages  %}
+            {% include 'cms/cms_sidebar.html' %}
+        {% endwith %}
+    </div>
+
+    <div style="display: block; width: 100%; height: 100vh; overflow-y: scroll;  padding: 1%; ">
+        {% block content %} {% endblock %}
+        
+    </div>
+</div>
+</body>
+</html>

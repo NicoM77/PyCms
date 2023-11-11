@@ -1,0 +1,22 @@
+<div style="width: 100%; display: flex; border: 2px black solid;" >
+    <div style="width: 100%; display: block; height: auto;">
+        <h3 style=" text-transform: uppercase;">{{module_name}}</h3>
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-evenly;">
+            {% for x in module_content.keys() %}
+            
+            <div style="flex-basis: calc(25% - 10px); box-sizing: border-box; margin: 5px;">
+                <h4>{{ x }}</h4>
+                <input id="input_page_name" type="text" value="{{page_name}}"> 
+                <button onclick="send_data_input_page_name()">change</button>
+            </div>
+            
+            {% endfor %}
+        </div>
+        
+</div>
+<!--
+    
+{{module_id}}
+{{module_content}} 
+    {{module_templates}} -->
+</div>

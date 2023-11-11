@@ -1,0 +1,9 @@
+.c-cms_sidebar--link > a > div > svg, #pagestoogle > ul > li > a> div> svg {
+    width: 20px;
+    height: 20px;
+    padding-right: 2px;
+
+}
+.c-cms_sidebar--link > a > div, #pagestoogle > ul > li > a> div {
+    margin-bottom: 2%;
+}

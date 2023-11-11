@@ -1,8 +1,48 @@
 {
-    "home":{
-        "module":[{"hero":"1"}, {"about":"2"}]
-    },
-    "header":{
-        "list":[{"Startseite":"/"},{"BAUM":"https://youtube.com"}]
-    }
+  "Header": {
+    "route": "/header",
+    "icon": "fa-solid fa-desktop",
+    "list": [
+      {
+        "Startseite": "/"
+      },
+      {
+        "BAUM": "https://youtube.com"
+      }
+    ]
+  },
+  "Home": {
+    "route": "/home",
+    "icon": "fa-brands fa-font-awesome",
+    "show_header": true,
+    "show_footer": false,
+    "module": [
+      {
+        "hero": "1"
+      },
+      {
+        "about": "2"
+      },
+      {
+        "text_and_button": "3"
+      }
+    ]
+  },
+  "Home2": {
+    "route": "/home2",
+    "icon": "fa-brands fa-font-awesome",
+    "show_header": true,
+    "show_footer": false,
+    "module": [
+      {
+        "hero": "1"
+      },
+      {
+        "about": "2"
+      },
+      {
+        "text_and_button": "3"
+      }
+    ]
+  }
 }

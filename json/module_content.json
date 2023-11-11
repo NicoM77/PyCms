@@ -10,6 +10,15 @@
         "link_text_2":"WILLIKOMEN auf meiner PAGE",
         "link_url_2":"WILLIKOMEN auf meiner PAGE"
     },
-    "2":{}
+    "2":{
+        "litle_text":"About Me",
+        "title":"MY SUPPERCOOL WEBSITE",
+        "title_text":"Wer w\u00e4hrend der Autofahrt \u00fcber Handy oder Freisprechanlage telefoniert, f\u00e4hrt wie einangetrunkener Wagenlenker. Zu diesem Schluss kommen die Psychologen Frank Drews,David Strayer und der Toxikologe Dennis Crouch von der Universit\u00e4t Utah in ihrer Studie,die sie heute in dem Journal Human Factors ver\u00f6ffentlichen. 25 M\u00e4nner und 15 Frauen imAlter zwischen 22 und 34 Jahren nahmen an A Comparison of the Cell Phone Driver andthe Drunk Driver teil. Das Bundesamt f\u00fcr Luftfahrt finanzierte die Untersuchungen mit 25 000 Dollar, um R\u00fcckschl\u00fcsse auf die Aufmerksamkeit von Piloten ziehen zu k\u00f6nnen."
+    },
+    "3":{
+        "title":"DU bisch bl\u00f6d, definitiv",
+        "button_text":"Gah Weg",
+        "button_url":"https://google.com"
+    }
 
 }

@@ -10,9 +10,19 @@
       "text_2": "large_text",
       "link_text_2": "text",
       "link_url_2": "url"
+    },
+    "about": {
+      "litle_text": "text",
+      "title": "text",
+      "title_text": "large_text"
+    },
+    "text_and_button": {
+      "title": "text",
+      "button_text": "text",
+      "button_url": "url"
     }
   },
   "temp": {
-    "Test": "2a03e43a0979af71844c709f95cd3b8ac5d35c22dbb797b31d9a1e15e61a4b0518933115ccacd090d7c34dcda335d973c5cbd056ecb662b62fd0c9001b8cf839ab5426db999633ebd7b6f2713256705ff5c4e5c83334c209d0f761c4f50ec0b8cdfe0088b32a107312e9f95bb937f65bb463d52282123e50f8894972802bda7d"
+    "Test": "7062c0ce2f19b89a10fe5af01cacae7291260809c6e6c60a9b090b6dc65babb455386fa82855a51a04376d795704477f0889bb6c509698465be4735f9aa986fb388139396fd4103292daf80350cc5b295932f84439584afaff61b33d1775cec4330c284719224eb8ee79f95da86c5deb67b8102ddaf36d7af0a1116e2fb49958"
   }
 }

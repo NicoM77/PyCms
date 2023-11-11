@@ -2,11 +2,27 @@
     <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
       <div class="u-align-left u-container-style u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-group u-group-1">
         <div class="u-container-layout u-container-layout-1">
+          {% if "litle_text" in module_content.keys() %}
+          <h5 class="u-text u-text-1">{{ module_content["litle_text"]}}</h5>
+          {% else %}
           <h5 class="u-text u-text-1">About company</h5>
+          {% endif %}
+
+          {% if "title" in module_content.keys() %}
+          <h2 class="u-custom-font u-font-oswald u-text u-text-2">{{module_content["title"]}}</h2>
+          {% else %}
           <h2 class="u-custom-font u-font-oswald u-text u-text-2">Need Amazing Design?</h2>
+          {% endif %}
+          
+          
+          {% if "title_text" in module_content.keys() %}
+          <p class="u-text u-text-3">{{module_content["title_text"]}} 
+        </p>
+          {% else %}
           <p class="u-text u-text-3">Paragraph. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur id suscipit ex. Suspendisse rhoncus laoreet purus <a href="https://nicepage.com/k/home-improvement-website-templates" class="u-border-1 u-border-hover-palette-2-light-2 u-border-no-left u-border-no-right u-border-no-top u-border-white u-btn u-button-style u-none u-text-body-alt-color u-btn-1">quis elementum</a>. Phasellus sed efficitur dolor, et ultricies sapien. Quisque fringilla sit amet dolor commodo efficitur.
-              Aliquam et sem odio. In ullamcorper nisi nunc, et molestie ipsum iaculis sit amet. 
-          </p>
+            Aliquam et sem odio. In ullamcorper nisi nunc, et molestie ipsum iaculis sit amet. 
+        </p>
+          {% endif %}
           <a href="https://nicepage.studio" class="u-border-radius-50 u-btn u-btn-round u-button-style u-hover-palette-4-light-1 u-palette-1-base u-btn-2">learn more</a>
         </div>
       </div>

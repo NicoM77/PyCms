@@ -1,0 +1,176 @@
+{% extends "cms/cms_template.html" %} 
+{% block title %}Home{% endblock %}
+{% block content %}
+    <div style="height: 200px; border: 2px black solid;width: 100%;" >
+        <div style="display: flex;">
+        <h1>{{ page_name }}</h1>
+            <p style="margin-left: 10px; margin-top: auto; color: red;" id="page_description"></p>
+        </div>
+            <div style="display: flex; justify-content: space-evenly;">
+                <div style="display: block;width: 100%;">
+                    <div style="display: block; width: 100%;">
+                        <h4>Name</h4>
+                        <input id="input_page_name" type="text" value="{{page_name}}"> <button onclick="send_data_input_page_name()">change</button>
+                        <script>
+                            async function send_data_input_page_name(){
+                            var value = document.getElementById('input_page_name')
+                            var key = "page_name"
+                            var where ="pages.json"
+                            var page = "{{page_name}}"
+                            
+                            value
+                            var response = await fetch("/api/change/", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({ 
+                                    value,
+                                    key,
+                                    where,
+                                    page }),
+                            });}
+                            
+                            
+                            
+                            
+                        </script>
+                    </div>
+                    <div style="display: block; width: 100%;">
+                        <h4>Route</h4>
+                        <input id="input_page_route" type="text" value="{{page_route}}"> <button>change</button>
+                    </div>
+                </div>
+                <div style="display: block;width: 100%;">
+                    <div style="display: block; width: 100%;">
+                        <a href="https://fontawesome.com/search?o=r&m=free" target="_blank"><h4>Icon</h4></a>
+                        <i style="margin-right: 5px; max-width: 25px;" id="input_page_icon_show" class="{{ pages[page_name]['icon'] }}"></i>
+                        <input id="input_page_icon" type="text" value="{{ pages[page_name]['icon'] }}"> 
+                        <button>change</button>
+                    </div>
+                </div>
+                <div style="display: block;width: 100%;">
+                    <div style="display: flex; width: 100%;">
+                        <h4>Show Header</h4>
+                        <label style="margin-left: 5px; " class="switch">
+                            <input id="input_show_header" type="checkbox">
+                            <span class="slider round"></span>
+                          </label>
+                    </div>
+                    <div style="display: flex; width: 100%;">
+                        <h4>Show Footer</h4>
+                        <label style="margin-left: 12px; " class="switch">
+                            <input id="input_show_header" type="checkbox">
+                            <span class="slider round"></span>
+                          </label>
+                    </div>
+                </div>
+                
+            </div>
+            <script>
+                var page_name = "{{page_name}}"
+                if (page_name == "Home"){
+                    document.getElementById("input_page_name").disabled  = true
+                    document.getElementById("input_page_route").disabled  = true
+
+                    document.getElementById("page_description").innerHTML  = "(einige werte sind unveränderbar da du dich auf " + page_name+ " befindest)"
+                }
+            </script>
+            <script>
+                document.getElementById('input_page_icon').addEventListener('input', function() {
+                    document.getElementById('input_page_icon_show').classList = document.getElementById('input_page_icon').value;
+                });
+            </script>
+            <script>
+                var show_header = "{{pages[page_name]['show_header']}}"
+                var show_footer = "{{pages[page_name]['show_footer']}}"
+                if (show_header == "True"){
+                    document.getElementById('input_show_header').checked =true
+                }
+                if (show_footer == "True"){
+                    document.getElementById('input_show_footer').checked =true
+                }
+                document.getElementById('input_show_header').addEventListener('change', function() {
+                    console.log(document.getElementById('input_show_header').checked)
+                });
+            </script>
+    </div>
+    <div style="display: flex; flex-direction: column; width: 100%; margin-bottom: 5%;">
+    {% for modul_counter in module_list_len %}
+        {% with module_name = module_name[modul_counter], module_id = module_id[modul_counter], module_content = module_content[module_id[modul_counter]], module_templates = module_templates[module_name[modul_counter]]  %}
+            {% include 'cms/cms_edit_module.html' %}
+        {% endwith %}
+    {% endfor %}
+    </div>
+    <div style="height: 100%;">
+    {% with page_route=page_route  %}
+        {% include 'cms/cms_vorschau.html' %}
+    {% endwith %}
+    </div>
+
+
+    <style>
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+    </style>
+{% endblock %}

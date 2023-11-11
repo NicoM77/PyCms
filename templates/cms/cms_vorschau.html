@@ -1,0 +1,29 @@
+<div style="width: 100%; height: 100%;">
+    <div style="display: flex; justify-content:space-between;">
+        <h2>VORSCHAU</h2>
+        
+        <input style="width: 80%;" id="iframe_width" type="range" id="vol" name="vol" min="5" max="100" value="100">
+
+        <a onclick="reloadIframe()" style="color: black; text-decoration: none;" href="#">
+            <h2>Reload</h2>
+        </a>
+    </div>
+    
+    <div style="width: 100%; height: 100%; display: flex; justify-content: center;">
+    <iframe id="vorschau_iframe" src="{{page_route}}"  style="border: 2px black solid; width: 100%; height: 100%;" frameborder="0"></iframe>
+    </div>
+</div>
+
+<script>
+    function reloadIframe() {
+      var iframe = document.getElementById('vorschau_iframe');
+      iframe.contentWindow.location.reload(true);
+    }
+  </script>
+  <script>
+    var iframeWidthInput = document.getElementById('iframe_width');
+    var outputDiv = document.getElementById('vorschau_iframe');
+    iframeWidthInput.addEventListener('input', function() {
+        outputDiv.style.width = iframeWidthInput.value + "%";
+    });
+</script>

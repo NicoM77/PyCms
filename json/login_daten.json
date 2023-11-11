@@ -2,7 +2,7 @@
     "login":{
         "Test":{
             "pw": "Test",
-            "permissions":9
+            "user_profile":"software-developer-copy.jpg"
         }
     }
 }

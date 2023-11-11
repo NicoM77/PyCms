@@ -1,0 +1,78 @@
+<div id="sidebar" class="c-CMS__Sidebar d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; height: 100vh;  margin-bottom: -50px;">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+         
+      <span id="sidebar_img" class="fs-4"><img style="width: 180px" src="{{ url_for('static', filename='images/default-logo.png') }}"></span>
+    
+    
+    <hr>
+  
+
+    <div class="mb-auto display:flex c-cms_sidebar--link">
+        <a style="color: white; text-decoration: none;" href="/cms">
+          <div style="font-size: 16px; display: flex;">
+            <i class="fa-solid fa-house"></i><span style="align-self: center;"> Home</span>
+          </div>
+        </a>
+        <a href="#" onclick="toggleElement_page()" style="color: white; text-decoration: none;" class="" href="/cms">
+          <div style="font-size: 16px; display: flex; ">
+            <i class="fa-solid fa-file "></i>
+              <span style="align-self: center;">Pages</span>
+          </div>
+        </a>
+        <div id="pagestoogle" style="display: none;">
+          <ul style="list-style: none;">
+            <li>
+              <a style=" color: white;" href="/cms/create_page">
+                <div>
+                <i class="fa-solid fa-plus"></i>Create New Page</div>
+              </a>
+            <li>
+              {% for key, value in pages.items() %}
+                
+                <li>
+                  <a style=" color: white;" href="/cms{{ value['route'] }}">
+                    <div>
+                    <i class="{{ value['icon'] }}"></i>{{ key }}</div>
+                  </a>
+                <li>
+            {% endfor %}
+          </ul> 
+      </div>
+        
+        
+    </div>
+   
+   
+    <hr>
+    <div class="dropdown">
+      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+        
+        <img id="user_profile_picture" src="/static/images/user_profile/{{user_data['user_profile']}}" alt="" width="40" height="40" class="rounded-circle me-2">
+        <strong id="username_display">{{user_data["username"]}}</strong>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
+        <!-- <li><a class="dropdown-item" href="#">New project...</a></li>
+        <li><a class="dropdown-item" href="#">Settings</a></li> -->
+        <li><a class="dropdown-item" href="#">Profile</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+      </ul>
+    </div>
+  </div>
+  
+
+  <script>
+    function toggleElement_page() {
+      const element = document.getElementById('pagestoogle');
+      
+      if (element.style.display === 'none') {
+        element.style.display = 'block'; // Einblenden, wenn es derzeit ausgeblendet ist
+      } else {
+        element.style.display = 'none'; // Ausblenden, wenn es derzeit eingeblendet ist
+      }
+    }
+  </script>
+
+<ul style="list-style: none;"></ul>
