@@ -1,6 +1,6 @@
 <section class="u-align-center u-clearfix u-section-1" id="carousel_08dc">
     {% if "background_img" in module_content.keys() %}
-    <img src="/api/get_img/{{module_content['background_img']}}" alt="" class="u-expanded-width u-image u-image-default u-image-1">
+    <img src="/api/get_img/upload/{{module_content['background_img']}}" alt="" class="u-expanded-width u-image u-image-default u-image-1">
     {% else %}
         
     <img src="{{ url_for('static', filename='images/hero_default_background.jpg') }}" alt="" class="u-expanded-width u-image u-image-default u-image-1">

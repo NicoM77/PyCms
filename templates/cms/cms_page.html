@@ -13,12 +13,10 @@
                         <input id="input_page_name" type="text" value="{{page_name}}"> <button onclick="send_data_input_page_name()">change</button>
                         <script>
                             async function send_data_input_page_name(){
-                            var value = document.getElementById('input_page_name')
+                            var value = document.getElementById('input_page_name').value
                             var key = "page_name"
                             var where ="pages.json"
                             var page = "{{page_name}}"
-                            
-                            value
                             var response = await fetch("/api/change/", {
                                 method: "POST",
                                 headers: {
@@ -29,7 +27,9 @@
                                     key,
                                     where,
                                     page }),
-                            });}
+                            });
+                            location.reload();
+                        }
                             
                             
                             
@@ -38,7 +38,28 @@
                     </div>
                     <div style="display: block; width: 100%;">
                         <h4>Route</h4>
-                        <input id="input_page_route" type="text" value="{{page_route}}"> <button>change</button>
+                        <input id="input_page_route" type="text" value="{{page_route}}"> <button onclick="send_data_input_route()">change</button>
+                        <script>
+                            async function send_data_input_route(){
+                            var value = document.getElementById('input_page_route').value
+                            var key = "route"
+                            var where ="pages.json"
+                            var page = "{{page_name}}"
+                            var response = await fetch("/api/change/", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({ 
+                                    value,
+                                    key,
+                                    where,
+                                    page }),
+                            });
+                            window.location.href = "/cms/" + value
+
+                        }
+                        </script>
                     </div>
                 </div>
                 <div style="display: block;width: 100%;">
@@ -46,7 +67,28 @@
                         <a href="https://fontawesome.com/search?o=r&m=free" target="_blank"><h4>Icon</h4></a>
                         <i style="margin-right: 5px; max-width: 25px;" id="input_page_icon_show" class="{{ pages[page_name]['icon'] }}"></i>
                         <input id="input_page_icon" type="text" value="{{ pages[page_name]['icon'] }}"> 
-                        <button>change</button>
+                        <button onclick="send_data_input_icon()">change</button>
+                        <script>
+                            async function send_data_input_icon(){
+                            var value = document.getElementById('input_page_icon').value
+                            var key = "icon"
+                            var where ="pages.json"
+                            var page = "{{page_name}}"
+                            var response = await fetch("/api/change/", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({ 
+                                    value,
+                                    key,
+                                    where,
+                                    page }),
+                            });
+                            location.reload();
+
+                        }
+                        </script>
                     </div>
                 </div>
                 <div style="display: block;width: 100%;">
@@ -60,7 +102,7 @@
                     <div style="display: flex; width: 100%;">
                         <h4>Show Footer</h4>
                         <label style="margin-left: 12px; " class="switch">
-                            <input id="input_show_header" type="checkbox">
+                            <input id="input_show_footer" type="checkbox">
                             <span class="slider round"></span>
                           </label>
                     </div>
@@ -77,11 +119,6 @@
                 }
             </script>
             <script>
-                document.getElementById('input_page_icon').addEventListener('input', function() {
-                    document.getElementById('input_page_icon_show').classList = document.getElementById('input_page_icon').value;
-                });
-            </script>
-            <script>
                 var show_header = "{{pages[page_name]['show_header']}}"
                 var show_footer = "{{pages[page_name]['show_footer']}}"
                 if (show_header == "True"){
@@ -91,13 +128,44 @@
                     document.getElementById('input_show_footer').checked =true
                 }
                 document.getElementById('input_show_header').addEventListener('change', function() {
-                    console.log(document.getElementById('input_show_header').checked)
+                    var value = document.getElementById('input_show_header').checked
+                    var key = "show_header"
+                    var where ="pages.json"
+                    var page = "{{page_name}}"
+                    var response = fetch("/api/change/", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ 
+                            value,
+                            key,
+                            where,
+                            page }),
+                    });
+                });
+                document.getElementById('input_show_footer').addEventListener('change', function() {
+                    var value = document.getElementById('input_show_footer').checked
+                    var key = "show_footer"
+                    var where ="pages.json"
+                    var page = "{{page_name}}"
+                    var response = fetch("/api/change/", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ 
+                            value,
+                            key,
+                            where,
+                            page }),
+                    });
                 });
             </script>
     </div>
     <div style="display: flex; flex-direction: column; width: 100%; margin-bottom: 5%;">
     {% for modul_counter in module_list_len %}
-        {% with module_name = module_name[modul_counter], module_id = module_id[modul_counter], module_content = module_content[module_id[modul_counter]], module_templates = module_templates[module_name[modul_counter]]  %}
+        {% with module_name = module_name[modul_counter], module_id = module_id[modul_counter], module_content = module_content[module_id[modul_counter]], module_templates = module_templates[module_name[modul_counter]], get_upload_files = get_upload_files %}
             {% include 'cms/cms_edit_module.html' %}
         {% endwith %}
     {% endfor %}

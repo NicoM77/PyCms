@@ -1,48 +1,48 @@
 {
-  "Header": {
-    "route": "/header",
-    "icon": "fa-solid fa-desktop",
-    "list": [
-      {
-        "Startseite": "/"
-      },
-      {
-        "BAUM": "https://youtube.com"
-      }
-    ]
-  },
-  "Home": {
-    "route": "/home",
-    "icon": "fa-brands fa-font-awesome",
-    "show_header": true,
-    "show_footer": false,
-    "module": [
-      {
-        "hero": "1"
-      },
-      {
-        "about": "2"
-      },
-      {
-        "text_and_button": "3"
-      }
-    ]
-  },
-  "Home2": {
-    "route": "/home2",
-    "icon": "fa-brands fa-font-awesome",
-    "show_header": true,
-    "show_footer": false,
-    "module": [
-      {
-        "hero": "1"
-      },
-      {
-        "about": "2"
-      },
-      {
-        "text_and_button": "3"
-      }
-    ]
-  }
+ "Header": {
+  "route": "/header",
+  "icon": "fa-solid fa-desktop",
+  "list": [
+   {
+    "Startseite": "/"
+   },
+   {
+    "BAUM": "https://youtube.com"
+   }
+  ]
+ },
+ "Home": {
+  "route": "/home",
+  "icon": "fa-brands fa-font-awesome",
+  "show_header": true,
+  "show_footer": false,
+  "module": [
+   {
+    "hero": "1"
+   },
+   {
+    "about": "2"
+   },
+   {
+    "text_and_button": "3"
+   }
+  ]
+ },
+ "Home2w": {
+  "route": "/home2a",
+  "icon": "fa-solid fa-desktop",
+  "show_header": true,
+  "show_footer": true,
+  "module": [
+   {
+    "hero": "1"
+   },
+   {
+    "about": "2"
+   },
+   {
+    "text_and_button": "3"
+   }
+  ]
+ }
 }

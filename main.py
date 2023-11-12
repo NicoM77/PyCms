@@ -64,7 +64,9 @@ def cms_page(page):
                                 module_name = module_name,
                                 module_id = module_id,
                                 module_list_len = range(0,len(module_name)),
-                                module_templates = module_templates
+                                module_templates = module_templates,
+
+                                get_upload_files = get_upload_files()
                                )
     else:
             return redirect("/login")
@@ -108,11 +110,11 @@ def login():
 def base():
     return render_template("base.html")
 
-@application.route("/api/get_img/<img>")
+@application.route("/api/get_img/<path:img>")
 def get_img(img):
     return send_file(f"static/images/{img}")
 
-@application.route("/api/change/",methods = ["POST"])
+@application.route("/api/change/", methods=["POST"])
 def api_change():
     module_content, pages, module_templates = get_json()
     try:
@@ -121,33 +123,37 @@ def api_change():
         page = data.get("page")
         key = data.get("key")
         value = data.get("value")
-        print(value)
         if where == "pages.json":
             if page in pages.keys():
                 if key in pages[page].keys():
                     pages[page][key] = value
                     with open("json/pages.json", "w") as f:
-                        json.dump(pages, f, indent=2)
+                        json.dump(pages, f, indent=1)
                     return jsonify({"message": "Erfolgreich"}), 200
                 if key == "page_name":
                     data = pages
-                    # data[value] = {
-                    #     "route":pages[page]["route"],
-                    #     "icon":pages[page]["icon"],
-                    #     "show_header":pages[page]["show_header"],
-                    #     "show_footer":pages[page]["show_footer"],
-                    #     "module":pages[page]["module"]
-                    # }
+                    data[value] = pages[page]
+                    del data[page]
                     with open("json/pages.json", "w") as f:
-                        json.dump(data, f, indent=2)
+                        json.dump(data, f, indent=1)
+                    return jsonify({"message": "Erfolgreich"}), 200
+                
+
+        elif where == "content.json":
+            print(where)
+            if page in module_content.keys():
+                print(page)
+                if key in module_content[page].keys():
+                    print(key)
+                    module_content[page][key] = value
+                    with open("json/module_content.json", "w") as f:
+                        json.dump(module_content, f, indent=2)
                     return jsonify({"message": "Erfolgreich"}), 200
 
-                
-        return jsonify({"message": e}), 400
+        return jsonify({"message": "ERROR"}), 400
     except Exception as e:
-        return jsonify({"message": e}), 400
-                
-                
+        return jsonify({"message": str(e)}), 400
+ 
 
         
 
@@ -171,7 +177,6 @@ def get_page(input_route):
             return page, pages[page]["route"]
         
     return False, False
-
 def get_json():
     with open("json/module_content.json") as f:
         module_content = json.load(f)
@@ -184,7 +189,26 @@ def get_json():
 
 
     return module_content, pages, module_templates
+def get_upload_files():
+    file_list = []
+    directory_path = create_full_path("/static/images/upload/")
+
+    if not os.path.exists(directory_path):
+        print(f"Das Verzeichnis {directory_path} existiert nicht.")
+        return file_list
+
+    for root, dirs, files in os.walk(directory_path):
+        for file in files:
+            file_list.append(file)
+
+    return file_list
+def create_full_path(relative_path):
+    current_directory = os.getcwd()  # Aktuelles Arbeitsverzeichnis
+    full_path = current_directory  + relative_path
+    return full_path
+
 
 if __name__ == "__main__":
+    print(get_upload_files())
     application.run(host="0.0.0.0", debug=True, port=5000)
  
