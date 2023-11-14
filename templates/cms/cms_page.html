@@ -1,7 +1,58 @@
 {% extends "cms/cms_template.html" %} 
 {% block title %}Home{% endblock %}
 {% block content %}
-    <div style="height: 200px; border: 2px black solid;width: 100%;" >
+        <div id="delte_banner" style="display: none;" class="delte_banner">
+            <h3>Delete <span id="delte_banner_what_title"></span>?</h3>
+            <p>Are you sure you want to delete</p>
+    
+            <div class="warn_info">
+            <h4><i class="fa fa-warning"></i> Warning</h4>
+            <p>By deleting this "<span id="delte_banner_page_name"></span>" <span id="delte_banner_what"></span> you can't undo this action.</p>
+            </div>
+    
+            <div class="clearfix">
+            <a class="btn1" id="cancel" onclick='document.getElementById("delte_banner").style.display = "none"; 
+            document.getElementById("container").style.marginTop = "0px" ' href="#">Cancel</a>
+            <a class="btn2" id="cancel" href="#" onclick="delete_click()"
+                >Delete <span id="delte_banner_what_button"></span> <i class="fa fa-trash"></i
+            ></a>
+            </div>
+        </div>
+        <script>
+            function delete_banner(name,what){
+                document.getElementById("container").style.marginTop = "-320px" 
+                document.getElementById("delte_banner").style.display = "flex" 
+                document.getElementById("delte_banner_page_name").innerHTML = name
+                document.getElementById("delte_banner_what").innerHTML = what
+                document.getElementById("delte_banner_what_title").innerHTML = what
+                document.getElementById("delte_banner_what_button").innerHTML = what
+            }
+            function delete_click(){
+                var name = document.getElementById("delte_banner_page_name").innerHTML
+                var what  = document.getElementById("delte_banner_what").innerHTML
+                var page_name = "{{page_name}}"
+                var response = fetch("/api/delete", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ 
+                        name,
+                        page_name,
+                        what }),
+                });}
+                data = response.json()
+                if (response.status === 200) {
+                    window.location.href = "";
+                } else {
+                    if (response.status === 400) {
+                        // HIER FELHER AUSSGEBEN
+                    }
+                }
+
+
+        </script>
+    <div id="container" style="height: 200px; border: 2px black solid;width: 100%;" >
         <div style="display: flex;">
         <h1>{{ page_name }}</h1>
             <p style="margin-left: 10px; margin-top: auto; color: red;" id="page_description"></p>
@@ -56,7 +107,7 @@
                                     where,
                                     page }),
                             });
-                            window.location.href = "/cms/" + value
+                            window.location.href = "/cms" + value
 
                         }
                         </script>
@@ -170,6 +221,7 @@
         {% endwith %}
     {% endfor %}
     </div>
+    
     <div style="height: 100%;">
     {% with page_route=page_route  %}
         {% include 'cms/cms_vorschau.html' %}

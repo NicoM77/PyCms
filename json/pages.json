@@ -7,6 +7,12 @@
     "Startseite": "/"
    },
    {
+    "BAUM": "https://google.com"
+   },
+   {
+    "BAUM": "https://youtube.com"
+   },
+   {
     "BAUM": "https://youtube.com"
    }
   ]
@@ -14,23 +20,6 @@
  "Home": {
   "route": "/home",
   "icon": "fa-brands fa-font-awesome",
-  "show_header": true,
-  "show_footer": false,
-  "module": [
-   {
-    "hero": "1"
-   },
-   {
-    "about": "2"
-   },
-   {
-    "text_and_button": "3"
-   }
-  ]
- },
- "Home2w": {
-  "route": "/home2a",
-  "icon": "fa-solid fa-desktop",
   "show_header": true,
   "show_footer": true,
   "module": [
@@ -42,6 +31,26 @@
    },
    {
     "text_and_button": "3"
+   },
+   {
+    "hero": "7"
+   }
+  ]
+ },
+ "Homes": {
+  "route": "/test",
+  "icon": "fa-solid fa-desktop",
+  "show_header": false,
+  "show_footer": false,
+  "module": [
+   {
+    "hero": "4"
+   },
+   {
+    "about": "5"
+   },
+   {
+    "text_and_button": "6"
    }
   ]
  }

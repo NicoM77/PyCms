@@ -1,11 +1,8 @@
 from flask import Flask, render_template, abort, request, url_for, redirect, session, send_file, jsonify, Response
 import json, requests, datetime, manager, os, random
+
 application = Flask(__name__)
 application.secret_key = os.urandom(128).hex()
-INSTALLED_APPS = [
-    'fontawesomefree'
-  ]
-
 
 @application.route("/")
 @application.route("/<path:page>")
@@ -140,11 +137,8 @@ def api_change():
                 
 
         elif where == "content.json":
-            print(where)
             if page in module_content.keys():
-                print(page)
                 if key in module_content[page].keys():
-                    print(key)
                     module_content[page][key] = value
                     with open("json/module_content.json", "w") as f:
                         json.dump(module_content, f, indent=2)
@@ -153,8 +147,27 @@ def api_change():
         return jsonify({"message": "ERROR"}), 400
     except Exception as e:
         return jsonify({"message": str(e)}), 400
- 
 
+@application.route("/api/delete", methods=["POST"])
+def api_delete():
+    module_content, pages, module_templates = get_json()
+    # try:
+    data = request.json
+    what = data.get("what")
+    page_name = data.get("page_name")
+    name = data.get("name")
+    if what == "Module":
+        if page_name in pages.keys():
+            for module in range(0,len(pages[page_name]["module"])):
+                if name in pages[page_name]["module"][module]:
+                    del pages[page_name]["module"][module]
+                    with open("json/pages.json", "w") as f:
+                        json.dump(pages, f, indent=1)
+                    return jsonify({"message": "Erfolgreich","redirect":"reload"}), 200        
+
+    return jsonify({"message": "ERROR"}), 400
+    # except Exception as e:
+    #     return jsonify({"message": str(e)}), 400
         
 
 @application.errorhandler(404)
@@ -172,7 +185,6 @@ def get_page(input_route):
     with open("json/pages.json") as f:
         pages = json.load(f)
     for page in pages.keys():
-        print(pages[page]["route"],"/" + str(input_route) )
         if pages[page]["route"] == "/" + str(input_route):
             return page, pages[page]["route"]
         
@@ -209,6 +221,5 @@ def create_full_path(relative_path):
 
 
 if __name__ == "__main__":
-    print(get_upload_files())
     application.run(host="0.0.0.0", debug=True, port=5000)
  
