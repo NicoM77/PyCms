@@ -40,8 +40,8 @@
  "Homes": {
   "route": "/test",
   "icon": "fa-solid fa-desktop",
-  "show_header": false,
-  "show_footer": false,
+  "show_header": true,
+  "show_footer": true,
   "module": [
    {
     "hero": "4"

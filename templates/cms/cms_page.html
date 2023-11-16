@@ -7,7 +7,7 @@
     
             <div class="warn_info">
             <h4><i class="fa fa-warning"></i> Warning</h4>
-            <p>By deleting this "<span id="delte_banner_page_name"></span>" <span id="delte_banner_what"></span> you can't undo this action.</p>
+            <p>By deleting this "<span id="delte_banner_page_name"></span>" <span id="delte_banner_what"></span> you can't undo this action. (ID:<span id="delete_module_id"></span>)</p>
             </div>
     
             <div class="clearfix">
@@ -19,26 +19,29 @@
             </div>
         </div>
         <script>
-            function delete_banner(name,what){
+            function delete_banner(name,what, id){
                 document.getElementById("container").style.marginTop = "-320px" 
                 document.getElementById("delte_banner").style.display = "flex" 
                 document.getElementById("delte_banner_page_name").innerHTML = name
-                document.getElementById("delte_banner_what").innerHTML = what
+                document.getElementById("delete_module_id").innerHTML = id
+                document.getElementById("delte_banner_what_title").innerHTML = what
                 document.getElementById("delte_banner_what_title").innerHTML = what
                 document.getElementById("delte_banner_what_button").innerHTML = what
             }
             function delete_click() {
-                var name = document.getElementById("delte_banner_page_name").innerHTML;
-                var what = document.getElementById("delte_banner_what").innerHTML;
+                
+                var module_id = document.getElementById("delete_module_id").innerHTML;
+                console.log(module_id);
+                var what = document.getElementById("delte_banner_what_title").innerHTML;
                 var page_name = "{{page_name}}";
-
+                
                 fetch("/api/delete", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        name,
+                        module_id,
                         page_name,
                         what
                     }),
@@ -241,9 +244,41 @@
                 {% for module_template in module_templates.keys() %}
                 <option value="{{module_template}}">{{module_template}}</option>
                 {% endfor %}
-            </select><span style="margin-left: 5px;">TEST</span></span>
+            </select>
+                <span style="margin-left: 5px;">
+                    <button onclick="create_module()">Create</button>
+                </span>
+        </span>
     </div>
     </div>
+    <script>
+        function create_module() {
+            var name = document.getElementById("input_create_module").value;
+            var moduleKey = "module"; // Verwende einen anderen Namen als "key", um Kollisionen zu vermeiden
+            var page = "{{page_name}}";
+
+            fetch("/api/create", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: name,
+                    key: moduleKey, // Verwende den neuen Variablennamen moduleKey
+                    page: page
+                }),
+            })
+            .then(function(response) {
+                if (response.status === 200) {
+                    location.reload();
+                }
+            })
+            .catch(function(error) {
+                console.error('Error:', error);
+            });
+        }
+
+    </script>
     
     <div style="height: 100%;">
     {% with page_route=page_route  %}

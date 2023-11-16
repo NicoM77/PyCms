@@ -50,7 +50,6 @@ def cms_page(page):
             if page_name in pages.keys():
                 module_name = [list(d.keys())[0] for d in pages[page_name]["module"]]
                 module_id = [list(d.values())[0] for d in pages[page_name]["module"]]
-                
         return render_template("cms/cms_page.html",
                                 user_data = manager.get_user_data(session["username"]),
                                 page_route = page_route,
@@ -148,26 +147,57 @@ def api_change():
     except Exception as e:
         return jsonify({"message": str(e)}), 400
 
+@application.route("/api/create", methods=["POST"])
+def api_create():
+    module_content, pages, module_templates = get_json()
+    try:
+        data = request.json
+        key = data.get("key")
+        page_name = data.get("page")
+        name = data.get("name")
+        if key == "module":
+            if name in module_templates.keys():
+                if page_name in pages.keys():
+                    module_id = str(modules_id_counter())
+                    pages[page_name]["module"].append({str(name):module_id})
+                    module_content[module_id] = module_templates[name]
+
+                    with open("json/pages.json", "w") as f:
+                        json.dump(pages, f, indent=2)
+                    with open("json/module_content.json", "w") as f:
+                        json.dump(module_content, f, indent=2)
+                    return jsonify({"message": "Erfolgreich"}), 200
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 400
+
 @application.route("/api/delete", methods=["POST"])
 def api_delete():
     module_content, pages, module_templates = get_json()
-    # try:
-    data = request.json
-    what = data.get("what")
-    page_name = data.get("page_name")
-    name = data.get("name")
-    if what == "Module":
-        if page_name in pages.keys():
-            for module in range(0,len(pages[page_name]["module"])):
-                if name in pages[page_name]["module"][module]:
-                    del pages[page_name]["module"][module]
-                    with open("json/pages.json", "w") as f:
-                        json.dump(pages, f, indent=1)
-                    return jsonify({"message": "Erfolgreich","redirect":"reload"}), 200        
+    try:
+        data = request.json
+        what = data.get("what")
+        page_name = data.get("page_name")
+        module_id = data.get("module_id")
+        if what == "Module":
+            if page_name in pages.keys():
+                for module in range(0,len(pages[page_name]["module"])):
+                    for module_key in pages[page_name]["module"][module].keys():
+                        if str(module_id) == pages[page_name]["module"][module][module_key]:
+                            del pages[page_name]["module"][module]
+                            with open("json/config.json") as f:
+                                config = json.load(f)
+                            config["delted_modules"].append(int(module_id))
+                            config["delted_modules"] = sorted(config["delted_modules"])
+                            with open("json/config.json", "w") as f:
+                                json.dump(config, f, indent=1)
+                            with open("json/pages.json", "w") as f:
+                                json.dump(pages, f, indent=1)
+                            return jsonify({"message": "Erfolgreich","redirect":"reload"}), 200        
 
-    return jsonify({"message": "ERROR"}), 400
-    # except Exception as e:
-    #     return jsonify({"message": str(e)}), 400
+        return jsonify({"message": "ERROR"}), 400
+    except Exception as e:
+         return jsonify({"message": str(e)}), 400
         
 
 @application.errorhandler(404)
@@ -214,6 +244,23 @@ def get_upload_files():
             file_list.append(file)
 
     return file_list
+
+
+def modules_id_counter():
+    with open("json/module_content.json") as f:
+        module_content = json.load(f)
+    repeat = True
+    counter = 0
+    while repeat == True:
+        counter = counter + 1 
+        if not str(counter) in module_content.keys():
+            
+            repeat = False
+        
+    return counter
+
+
+
 def create_full_path(relative_path):
     current_directory = os.getcwd()  # Aktuelles Arbeitsverzeichnis
     full_path = current_directory  + relative_path
