@@ -6,7 +6,7 @@ git reset --hard
 git fetch
 git pull
 
-start /B py main.py
+start /B python3 main.py
 
 :loop
 timeout /t 1 /nobreak > NULL
