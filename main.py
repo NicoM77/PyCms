@@ -235,7 +235,10 @@ def api_delete():
     except Exception as e:
          return jsonify({"message": str(e)}), 400
         
-
+@application.route("/restart")
+def restart():
+    open("restart", "w")
+    return "Erfolgreich Gestartet"
 @application.errorhandler(404)
 def not_found(e):
     return render_template("404.html")
