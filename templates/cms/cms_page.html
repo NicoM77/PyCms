@@ -13,8 +13,7 @@
             <div class="clearfix">
             <a class="btn1" id="cancel" onclick='document.getElementById("delte_banner").style.display = "none"; 
             document.getElementById("container").style.marginTop = "0px" ' href="#">Cancel</a>
-            <a class="btn2" id="cancel" href="#" onclick="delete_click()"
-                >Delete <span id="delte_banner_what_button"></span> <i class="fa fa-trash"></i
+            <a class="btn2" id="cancel" href="#" onclick="delete_click()">Delete <span id="delte_banner_what_button"></span> <i class="fa fa-trash"></i
             ></a>
             </div>
         </div>
@@ -69,10 +68,14 @@
 
 
         </script>
-    <div id="container" style="height: 200px; border: 2px black solid;width: 100%;" >
-        <div style="display: flex;">
-        <h1>{{ page_name }}</h1>
+    <div id="container" style="height: 200px; border: 2px black solid;width: 100%;  padding: 10px; " >
+        
+        <div style="display: flex; justify-content: space-between; ">
+            <div style="display: flex;">
+            <h1>{{ page_name }}</h1>
             <p style="margin-left: 10px; margin-top: auto; color: red;" id="page_description"></p>
+            </div>
+        <a class="delete_icon" href="#"><i onclick="delete_banner('{{page_name}}','Page', '{{page_route}}')" class="fa-solid fa-trash-can "></i></a>
         </div>
             <div style="display: flex; justify-content: space-evenly;">
                 <div style="display: block;width: 100%;">

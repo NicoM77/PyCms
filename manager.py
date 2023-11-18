@@ -17,7 +17,25 @@ def temp_add_hash(username, hash):
     with open("json/config.json", "w") as f:
         json.dump(data, f, indent=2)
 
-    
+def create_page(page_name:str, page_route:str, show_header:bool, show_footer:bool):
+    try:
+        with open("json/pages.json") as f:
+            pages = json.load(f)
+        if not page_name in pages.keys():
+            print(1)
+            pages[page_name] = {
+                "route":page_route,
+                "icon":"fa-regular fa-clock",
+                "show_header": show_header,
+                "show_footer": show_footer,
+                "module":[]
+            }
+            with open("json/pages.json", "w") as f:
+                json.dump(pages, f, indent=1)
+            return 200
+        return 404
+    except Exception as e:
+        return 404
     
     
 def authorized(username, hash):

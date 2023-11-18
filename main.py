@@ -6,6 +6,7 @@ application.secret_key = os.urandom(128).hex()
 
 @application.route("/")
 @application.route("/<path:page>")
+@application.route("/<path:page>/")
 def home(page="home"):
     page_name ,page_route = get_page(page)
     if not page_name == False:
@@ -31,15 +32,14 @@ def home(page="home"):
                                         heder_list_len = range(0,len(heder_text_list))
                                     )
     return render_template("404.html")
-
 @application.route("/cms")
+@application.route("/cms/")
 def cms():
     if authorited():
         module_content, pages, module_templates = get_json()
         return render_template("cms/cms_home.html", user_data = manager.get_user_data(session["username"]), module_content = module_content, pages =pages )
     else:
         return redirect("/login")
-    
 @application.route("/cms/<path:page>")
 def cms_page(page):
     if authorited():
@@ -66,8 +66,28 @@ def cms_page(page):
                                )
     else:
             return redirect("/login")
-    
-    
+@application.route("/cms/create_page", methods=["GET","POST"])
+def create_page():
+    if authorited():
+        module_content, pages, module_templates = get_json()
+        if request.method == "POST":
+            try:
+                data = request.json
+                pages_name = data.get("pages_name")
+                page_route = data.get("page_route")
+                show_header = data.get("show_header")
+                show_footer = data.get("show_footer")
+                response = manager.create_page(pages_name, page_route, show_header, show_footer)
+                if response == 200:
+                    return jsonify({"message": "Erfolgreich"}), 200
+                return jsonify({"message": "ERROR"}), 400
+            except Exception as e:
+                return jsonify({"message": str(e)}), 400
+        else:
+            return render_template("cms/create_page.html", user_data = manager.get_user_data("not logged in"), module_content = module_content, pages =pages)
+    else:
+         return redirect("/login")
+
 @application.route("/logout")
 def logout():
     if "username" in session and "session_token" in session:
@@ -193,7 +213,23 @@ def api_delete():
                                 json.dump(config, f, indent=1)
                             with open("json/pages.json", "w") as f:
                                 json.dump(pages, f, indent=1)
-                            return jsonify({"message": "Erfolgreich","redirect":"reload"}), 200        
+                            return jsonify({"message": "Erfolgreich","redirect":"reload"}), 200
+        # elif what == "Page":
+        #     if page_name in pages.keys():
+        #         for module in range(0,len(pages[page_name]["module"])):
+        #             for module_key in pages[page_name]["module"][module].keys():
+        #                 if str(module_id) == pages[page_name]["module"][module][module_key]:
+        #                     del pages[page_name]["module"][module]
+        #                     with open("json/config.json") as f:
+        #                         config = json.load(f)
+        #                     config["delted_modules"].append(int(module_id))
+        #                     config["delted_modules"] = sorted(config["delted_modules"])
+        #                     with open("json/config.json", "w") as f:
+        #                         json.dump(config, f, indent=1)
+        #                     with open("json/pages.json", "w") as f:
+        #                         json.dump(pages, f, indent=1)
+        #                     return jsonify({"message": "Erfolgreich","redirect":"reload"}), 200
+
 
         return jsonify({"message": "ERROR"}), 400
     except Exception as e:
@@ -244,8 +280,6 @@ def get_upload_files():
             file_list.append(file)
 
     return file_list
-
-
 def modules_id_counter():
     with open("json/module_content.json") as f:
         module_content = json.load(f)
@@ -258,9 +292,6 @@ def modules_id_counter():
             repeat = False
         
     return counter
-
-
-
 def create_full_path(relative_path):
     current_directory = os.getcwd()  # Aktuelles Arbeitsverzeichnis
     full_path = current_directory  + relative_path

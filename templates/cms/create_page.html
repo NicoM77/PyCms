@@ -1,0 +1,153 @@
+{% extends "cms/cms_template.html" %} 
+{% block title %}Home{% endblock %}
+{% block content %}
+    <H1>Create New Page</H1>
+    <form method="post" action="#">
+    <div>
+    <span>Gib der Page einen Namen: </span>
+    
+    <input id="pages_name" name="pages_name" type="text">
+    <input id="page_route" name="page_route" value="/route" type="text">
+    <div id="pages_rout"></div>
+    </div>
+    <div>
+        <span>Header</span> <label style=""  class="switch">
+            <input id="show_header" name="show_header" type="checkbox" checked>
+            <span class="slider round"></span>
+          </label>
+          <span>Footer</span> <label style=""class="switch">
+            <input id="show_footer"  name="show_footer"  type="checkbox" checked>
+            <span class="slider round"></span>
+          </label>
+
+        <style>
+            .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            }
+
+            /* Hide default HTML checkbox */
+            .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+            }
+
+            /* The slider */
+            .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+            }
+
+            .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+            }
+
+            input:checked + .slider {
+            background-color: #2196F3;
+            }
+
+            input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+            }
+
+            input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+            }
+
+            /* Rounded sliders */
+            .slider.round {
+            border-radius: 34px;
+            }
+
+            .slider.round:before {
+            border-radius: 50%;
+            }
+        </style>
+    </div>
+    <div>
+        <input type="submit">
+    </div>
+    <script>
+    const inputElement = document.getElementById('pages_name');
+    const pagesRoutElement = document.getElementById('page_route');
+
+    inputElement.addEventListener('input', updatePagesRout);
+
+    function updatePagesRout() {
+        var inputValue = inputElement.value;
+        inputValue = inputValue.toLowerCase();
+
+        inputValue = inputValue.replace(/ä/g, "ae");
+        inputValue = inputValue.replace(/ö/g, "oe");
+        inputValue = inputValue.replace(/ü/g, "ue");
+        inputValue = inputValue.replace(/ß/g, "ss");
+        inputValue = inputValue.replace(/[^a-z0-9]/g, '');
+        pagesRoutElement.value = '/'+ inputValue;
+
+    }
+    </script> 
+    </form>   
+    
+    <script>
+
+    document.querySelector("form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        var pages_name = document.getElementById('pages_name').value;
+        var page_route = document.getElementById('page_route').value;
+        var show_header = document.getElementById('show_header').checked;
+        var show_footer = document.getElementById('show_footer').checked;
+
+        if (pages_name == "") {
+            document.getElementById('pages_name').style.backgroundColor = "lightgray"
+        }
+        if (page_route == "" || page_route == "/route"){
+            document.getElementById('page_route').style.backgroundColor = "lightgray"
+        }
+
+        if (pages_name != "" && page_route != "" && page_route != "/route"){
+                var response = await fetch("/cms/create_page", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                        body: JSON.stringify({ 
+                            pages_name,
+                            page_route,
+                            show_header,
+                            show_footer 
+                                }),
+                        });
+            }
+            if (response.status === 200) {
+
+
+                window.location.href = "/cms" + page_route;
+                } else {
+
+                    // EROOR MEMSSAGE ADD
+                // errorMessage.textContent = data.message;
+                }
+            
+            });
+    </script>  
+{% endblock %}
