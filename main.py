@@ -22,6 +22,7 @@ def home(page="home"):
                 return render_template("index.html",
                                         module_content = module_content,
                                         page = pages[page_name],
+                                        page_name = page_name,
 
                                         module_name = module_name,
                                         module_id =module_id,
@@ -84,10 +85,16 @@ def create_page():
             except Exception as e:
                 return jsonify({"message": str(e)}), 400
         else:
-            return render_template("cms/create_page.html", user_data = manager.get_user_data("not logged in"), module_content = module_content, pages =pages)
+            return render_template("cms/create_page.html", user_data = manager.get_user_data(session["username"]), module_content = module_content, pages =pages)
     else:
          return redirect("/login")
-
+@application.route("/cms/header", methods=["GET","POST"])
+def edit_cms_header():
+    if authorited():
+        module_content, pages, module_templates = get_json()
+        return render_template("cms/header_edit.html", user_data = manager.get_user_data(session["username"]), module_content = module_content, pages =pages)
+    else:
+        return redirect("/login")
 @application.route("/logout")
 def logout():
     if "username" in session and "session_token" in session:
@@ -121,15 +128,12 @@ def login():
 
     else:
         return render_template("login.htm")
-
 @application.route("/base")
 def base():
     return render_template("base.html")
-
 @application.route("/api/get_img/<path:img>")
 def get_img(img):
     return send_file(f"static/images/{img}")
-
 @application.route("/api/change/", methods=["POST"])
 def api_change():
     module_content, pages, module_templates = get_json()
@@ -166,7 +170,6 @@ def api_change():
         return jsonify({"message": "ERROR"}), 400
     except Exception as e:
         return jsonify({"message": str(e)}), 400
-
 @application.route("/api/create", methods=["POST"])
 def api_create():
     module_content, pages, module_templates = get_json()
@@ -190,7 +193,6 @@ def api_create():
 
     except Exception as e:
         return jsonify({"message": str(e)}), 400
-
 @application.route("/api/delete", methods=["POST"])
 def api_delete():
     module_content, pages, module_templates = get_json()
@@ -234,7 +236,7 @@ def api_delete():
         return jsonify({"message": "ERROR"}), 400
     except Exception as e:
          return jsonify({"message": str(e)}), 400
-        
+     
 @application.route("/restart")
 def restart():
     open("restart", "w")
