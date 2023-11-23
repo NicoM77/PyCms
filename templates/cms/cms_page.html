@@ -75,7 +75,8 @@
             <h1>{{ page_name }}</h1>
             <p style="margin-left: 10px; margin-top: auto; color: red;" id="page_description"></p>
             </div>
-        <a class="delete_icon" href="#"><i onclick="delete_banner('{{page_name}}','Page', '{{page_route}}')" class="fa-solid fa-trash-can "></i></a>
+        
+        <a id="page_delete" class="delete_icon" href="#"><i onclick="delete_banner('{{page_name}}','Page', '{{page_route}}')" class="fa-solid fa-trash-can "></i></a>
         </div>
             <div style="display: flex; justify-content: space-evenly;">
                 <div style="display: block;width: 100%;">
@@ -185,7 +186,7 @@
                 if (page_name == "Home"){
                     document.getElementById("input_page_name").disabled  = true
                     document.getElementById("input_page_route").disabled  = true
-
+                    document.getElementById("page_delete").style.display = "none";
                     document.getElementById("page_description").innerHTML  = "(einige werte sind unveränderbar da du dich auf " + page_name+ " befindest)"
                 }
             </script>

@@ -1,9 +1,32 @@
 {% extends "cms/cms_template.html" %} 
 {% block title %}Home{% endblock %}
 {% block content %}
+<table>
+    <thead>
+        <tr>
+          <th>Name</th>
+          <th>URL</th>
+        </tr>
+    </thead>
 {% for item in pages["Header"]["list"] %}
-{% for key in item.keys() %}
-{{key}}
-{%endfor%}
+    {% for key in item.keys() %}
+    {{count}}
+        <tr>
+            <th><input id="header_name_{{key}}" type="text" value="{{key}}"></th>
+            <th><input id="header_url_{{key}}" type="text" value="{{item[key]}}"></th>
+            <th><button id="header_submit_{{key}}" type="submit">change</button></th>
+        </tr>
+        <script>
+            document.getElementById("header_submit_{{key}}").addEventListener("click", () =>{
+                console.log("TEST")
+            })
+        </script>
+    {%endfor%}
 {% endfor %}
+<tr>
+    <th><input type="text" placeholder="Create New"></th>
+    <th><input type="text" placeholder="URL"></th>
+    <th><button type="submit">add</button></th>
+</tr>
+</table>
 {% endblock %}

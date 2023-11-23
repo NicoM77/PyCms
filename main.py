@@ -134,6 +134,24 @@ def base():
 @application.route("/api/get_img/<path:img>")
 def get_img(img):
     return send_file(f"static/images/{img}")
+@application.route("/api/header_change/>", methods=["POST"])
+def api_header_change():
+    module_content, pages, module_templates = get_json()
+    try:
+        data = request.json
+        method = data.get("method")
+        name = data.get("name")
+        url = data.get("url")
+        if method == "change":
+            for list_iteam in pages["Header"]["list"]:
+                if name in list_iteam.keys():
+                    print("TEST")
+        
+        return jsonify({"message": "ERROR"}), 400
+    except Exception as e:
+         return jsonify({"message": str(e)}), 400
+    
+
 @application.route("/api/change/", methods=["POST"])
 def api_change():
     module_content, pages, module_templates = get_json()
@@ -216,21 +234,17 @@ def api_delete():
                             with open("json/pages.json", "w") as f:
                                 json.dump(pages, f, indent=1)
                             return jsonify({"message": "Erfolgreich","redirect":"reload"}), 200
-        # elif what == "Page":
-        #     if page_name in pages.keys():
-        #         for module in range(0,len(pages[page_name]["module"])):
-        #             for module_key in pages[page_name]["module"][module].keys():
-        #                 if str(module_id) == pages[page_name]["module"][module][module_key]:
-        #                     del pages[page_name]["module"][module]
-        #                     with open("json/config.json") as f:
-        #                         config = json.load(f)
-        #                     config["delted_modules"].append(int(module_id))
-        #                     config["delted_modules"] = sorted(config["delted_modules"])
-        #                     with open("json/config.json", "w") as f:
-        #                         json.dump(config, f, indent=1)
-        #                     with open("json/pages.json", "w") as f:
-        #                         json.dump(pages, f, indent=1)
-        #                     return jsonify({"message": "Erfolgreich","redirect":"reload"}), 200
+        elif what == "Page":
+            print(1)
+            if page_name in pages.keys():
+                print(pages[page_name]["route"])
+                print(module_id)
+                if pages[page_name]["route"] == module_id:
+                    print(1)
+                    del pages[page_name]
+                    with open("json/pages.json", "w") as f:
+                        json.dump(pages, f, indent=1)
+                    return jsonify({"message": "Erfolgreich","redirect":"/cms"}), 200
 
 
         return jsonify({"message": "ERROR"}), 400
