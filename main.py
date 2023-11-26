@@ -134,18 +134,18 @@ def base():
 @application.route("/api/get_img/<path:img>")
 def get_img(img):
     return send_file(f"static/images/{img}")
-@application.route("/api/header_change/>", methods=["POST"])
+@application.route("/api/header_change/", methods=["POST"])
 def api_header_change():
     module_content, pages, module_templates = get_json()
     try:
         data = request.json
-        method = data.get("method")
-        name = data.get("name")
-        url = data.get("url")
-        if method == "change":
-            for list_iteam in pages["Header"]["list"]:
-                if name in list_iteam.keys():
-                    print("TEST")
+        daten = data.get("data")
+        if len(daten) > 0:
+            pages["Header"]["list"] = daten
+            with open("json/pages.json", "w") as f:
+                json.dump(pages, f, indent=1)
+            return jsonify({"message": "Erfolgreich","redirect":"/cms"}), 200
+        
         
         return jsonify({"message": "ERROR"}), 400
     except Exception as e:

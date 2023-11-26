@@ -1,13 +1,14 @@
 {% extends "cms/cms_template.html" %} 
 {% block title %}Home{% endblock %}
 {% block content %}
-<table>
+<table id="table_header">
     <thead>
         <tr>
           <th>Name</th>
           <th>URL</th>
         </tr>
     </thead>
+    <tbody>
 {% for item in pages["Header"]["list"] %}
     {% for key in item.keys() %}
     {{count}}
@@ -24,9 +25,68 @@
     {%endfor%}
 {% endfor %}
 <tr>
-    <th><input type="text" placeholder="Create New"></th>
+    <th><input class="header_create_new" type="text" placeholder="Create New"></th>
     <th><input type="text" placeholder="URL"></th>
-    <th><button type="submit">add</button></th>
+    <th></th>
 </tr>
+</tbody>
 </table>
+<script>
+    document.querySelector(".header_create_new").addEventListener('input', create_new)
+    
+    function create_new(event){
+        
+
+        const newRowInputs = document.querySelectorAll('.header_create_new');
+        newRowInputs[0].classList.remove('header_create_new')
+        if (newRowInputs.length > 0) {
+            const newRow = newRowInputs[newRowInputs.length - 1].closest('tr'); // Die neueste Zeile finden
+            if (newRow) {
+                const thirdColumn = newRow.querySelector('th:nth-child(3)');
+                
+                // Hier ein neues Button-Element erstellen
+                const newButton = document.createElement('button');
+                newButton.setAttribute('id', 'header_submit');
+                newButton.setAttribute('type', 'submit');
+                newButton.textContent = 'change';
+
+                // Füge das zusätzliche Button-Element zur dritten Spalte hinzu
+                thirdColumn.appendChild(newButton);
+            }
+        }
+
+        const table = document.getElementById('table_header').getElementsByTagName('tbody')[0];
+        
+        const newRow = table.insertRow(table.rows.length);
+        const cell1 = document.createElement('th');
+        const cell2 = document.createElement('th');
+        const cell3 = document.createElement('th');
+        cell1.innerHTML = '<input class="header_create_new" type="text" placeholder="Create New">';
+        cell2.innerHTML = '<input type="text" placeholder="URL">';
+        cell3.innerHTML = '';
+        newRow.appendChild(cell1);
+        newRow.appendChild(cell2);
+        newRow.appendChild(cell3);
+        document.querySelector(".header_create_new").addEventListener('input', create_new)
+        event.target.removeEventListener('input', create_new);
+    }
+</script>
+<script>
+
+    function extractTableData() {
+        const tableRows = document.querySelectorAll('tbody tr');
+        const data = [];
+        tableRows.forEach(row => {
+            const name = row.children[0].firstChild.value
+            const url = row.children[1].firstChild.value 
+            if (name && url) {    
+                const entry = {};
+                entry[name] = url;
+                data.push(entry);
+            }
+        });
+    
+        return data;
+    }
+    </script>
 {% endblock %}
