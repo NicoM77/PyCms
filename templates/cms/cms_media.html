@@ -1,0 +1,9 @@
+{% extends "cms/cms_template.html" %} 
+{% block title %}Home{% endblock %}
+{% block content %}
+<h1>Cloud Storage</h1>
+<form method="POST" action="/api/upload" enctype="multipart/form-data">
+    <input type="file" name="file">
+    <input type="submit" value="Upload">
+</form>
+{% endblock %}

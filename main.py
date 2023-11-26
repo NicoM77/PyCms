@@ -1,8 +1,11 @@
-from flask import Flask, render_template, abort, request, url_for, redirect, session, send_file, jsonify, Response
+from flask import Flask, render_template, abort, request, send_from_directory, url_for, redirect, session, send_file, jsonify, Response
 import json, requests, datetime, manager, os, random
 
 application = Flask(__name__)
 application.secret_key = os.urandom(128).hex()
+
+UPLOAD_FOLDER = 'static/images/upload'
+application.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @application.route("/")
 @application.route("/<path:page>")
@@ -95,6 +98,13 @@ def edit_cms_header():
         return render_template("cms/header_edit.html", user_data = manager.get_user_data(session["username"]), module_content = module_content, pages =pages)
     else:
         return redirect("/login")
+@application.route("/cms/media/<path:pfad>")
+def media(pfad="/"):
+    # if authorited():
+    module_content, pages, module_templates = get_json()
+    return render_template("cms/cms_media.html", user_data = manager.get_user_data(session["username"]), module_content = module_content, pages =pages)
+    # else:
+    #     return redirect("/login")
 @application.route("/logout")
 def logout():
     if "username" in session and "session_token" in session:
@@ -105,8 +115,6 @@ def logout():
         manager.temp_add_hash(username, "logout")
         return redirect("/")
     return redirect("/")
-
-
 @application.route("/login",methods = ["GET","POST"])
 def login():
     if request.method == "POST":
@@ -150,8 +158,6 @@ def api_header_change():
         return jsonify({"message": "ERROR"}), 400
     except Exception as e:
          return jsonify({"message": str(e)}), 400
-    
-
 @application.route("/api/change/", methods=["POST"])
 def api_change():
     module_content, pages, module_templates = get_json()
@@ -250,7 +256,17 @@ def api_delete():
         return jsonify({"message": "ERROR"}), 400
     except Exception as e:
          return jsonify({"message": str(e)}), 400
-     
+@application.route('/api/upload', methods=['POST'])
+def upload_file():
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            return jsonify({"message": "ERROR"}), 400
+        file = request.files['file']
+        if file.filename == '':
+            return jsonify({"message": "ERROR"}), 400
+        if file:
+            file.save(os.path.join(application.config['UPLOAD_FOLDER'], file.filename))
+            return jsonify({"message": "succesful"}), 200
 @application.route("/restart")
 def restart():
     open("restart", "w")

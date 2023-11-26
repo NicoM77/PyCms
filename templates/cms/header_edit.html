@@ -21,20 +21,21 @@
                         });
     }
 </script>
-<table id="table_header">
+
+<table id="table_header" style="width: 50%;">
     <thead>
         <tr>
-          <th>Name</th>
-          <th>URL</th>
+          <th style="width: 50%;">Name</th>
+          <th style="width: 50%;">URL</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody >
 {% for item in pages["Header"]["list"] %}
     {% for key in item.keys() %}
     {{count}}
-        <tr>
-            <th><input id="header_name_{{key}}" type="text" value="{{key}}"></th>
-            <th><input id="header_url_{{key}}" type="text" value="{{item[key]}}"></th>
+        <tr >
+            <th><input style="width: 100%;" id="header_name_{{key}}" type="text" value="{{key}}"></th>
+            <th><input style="width: 100%;" id="header_url_{{key}}" type="text" value="{{item[key]}}"></th>
             <th><button id="header_submit_{{key}}" type="submit">change</button></th>
         </tr>
         <script>
@@ -42,13 +43,17 @@
         </script>
     {%endfor%}
 {% endfor %}
-<tr>
-    <th><input class="header_create_new" type="text" placeholder="Create New"></th>
-    <th><input type="text" placeholder="URL"></th>
+<tr >
+    <th><input style="width: 100%;" class="header_create_new" type="text" placeholder="Create New"></th>
+    <th><input style="width: 100%;" type="text" placeholder="URL"></th>
     <th></th>
 </tr>
 </tbody>
 </table>
+<!-- <div style="display: flex; width: 50%; justify-content: space-evenly;">
+    <h4>Header background-color</h4> <input type="color">
+</div> -->
+
 <script>
     document.querySelector(".header_create_new").addEventListener('input', create_new)
     
