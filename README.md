@@ -1,7 +1,3 @@
-## Ideen
-- 1 Base Branch, welchen ich kopieren kann. Kein Name, Kein Logo. Nichts Raw grundlage
-- Für jede page die ich machen werde einnen neuen Branch mit dem base branch als Grundlage
-   
 ## Todo
 > ### @Nicom77
 - [x] Page Create
