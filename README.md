@@ -1,10 +1,6 @@
 ## Ideen
 - 1 Base Branch, welchen ich kopieren kann. Kein Name, Kein Logo. Nichts Raw grundlage
 - Für jede page die ich machen werde einnen neuen Branch mit dem base branch als Grundlage
-- Module eigener Branch
-  - Pro Modul neuer Commit
-  - Dann kann ich jedes Modul einzeln zu einem Projekt mergen.
-     - Sprich, Css, html, module_templets pro modul ein commit. wenn jemand dieses Modul möchte, Commit auscheken und zum jeweilgen projekt mergen.
    
 ## Todo
 > ### @Nicom77
