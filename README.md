@@ -4,7 +4,7 @@
 - [x] Page Delete
 - [x] Modul Create
 - [x] Modul Delete
-- [ ] Header Links change
+- [x] Header Links change
 - [ ] Footer edit
 - [ ] Media Upload
 - [ ] Logo change
