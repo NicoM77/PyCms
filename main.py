@@ -102,11 +102,11 @@ def edit_cms_header():
 @application.route("/cms/media/<path:pfad>")
 def media(pfad="/"):
     if authorited():
+        if not pfad == "/":
+            pfad = "/" + pfad
         dateien, ordner = liste_dateien_und_ordner(application.config['UPLOAD_FOLDER'] + pfad)
-        print(dateien, ordner)
-        
         module_content, pages, module_templates = get_json()
-        return render_template("cms/cms_media.html", user_data = manager.get_user_data(session["username"]), module_content = module_content, pages =pages)
+        return render_template("cms/cms_media.html", user_data = manager.get_user_data(session["username"]), module_content = module_content, pages =pages, files = dateien, folder = ordner, pfad = pfad)
     else:
         return redirect("/login")
 @application.route("/logout")

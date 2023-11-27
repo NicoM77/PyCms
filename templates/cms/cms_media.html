@@ -6,4 +6,18 @@
     <input type="file" name="file">
     <input type="submit" value="Upload">
 </form>
+{% for folder in folder %}
+        <a href="/cms/media/{{folder}}">{{folder}}</a>
+    {%endfor%}
+<div style="display: flex;">
+    {% for file in files %}
+    <div style="display: flex;">
+        <img style="width: 100%; overflow:hidden; aspect-ratio: 1;" src="/api/get_img/upload{{pfad}}{{file}}">
+    </div>
+       
+    {%endfor%}
+    
+    
+
+</div>
 {% endblock %}
