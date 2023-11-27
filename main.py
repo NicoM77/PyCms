@@ -103,7 +103,7 @@ def edit_cms_header():
 def media(pfad="/"):
     if authorited():
         if not pfad == "/":
-            pfad = "/" + pfad
+            pfad = "/" + pfad + "/"
         dateien, ordner = liste_dateien_und_ordner(application.config['UPLOAD_FOLDER'] + pfad)
         module_content, pages, module_templates = get_json()
         return render_template("cms/cms_media.html", user_data = manager.get_user_data(session["username"]), module_content = module_content, pages =pages, files = dateien, folder = ordner, pfad = pfad)
@@ -262,14 +262,20 @@ def api_delete():
 @application.route('/api/upload', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
+        path = request.form['path']
         if 'file' not in request.files:
-            return jsonify({"message": "ERROR"}), 400
+            return jsonify({"message": "ERROR: No file part"}), 400
+        
         file = request.files['file']
         if file.filename == '':
-            return jsonify({"message": "ERROR"}), 400
-        if file:
-            file.save(os.path.join(application.config['UPLOAD_FOLDER'], file.filename))
-            return jsonify({"message": "succesful"}), 200
+            return jsonify({"message": "ERROR: No selected file"}), 400
+        print(file.filename.rsplit('.', 1)[1].lower() in {"png", "jpg", "mp4"})
+        if '.' in file.filename and file.filename.rsplit('.', 1)[1].lower() in {"png", "jpg", "mp4"}:
+            file.save(os.path.join(application.config['UPLOAD_FOLDER']+ path, file.filename))
+            return jsonify({"message": "successful"}), 200
+        else:
+            return jsonify({"message": "ERROR: File type not allowed"}), 400
+
 @application.route("/restart")
 def restart():
     open("restart", "w")

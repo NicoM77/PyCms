@@ -2,22 +2,124 @@
 {% block title %}Home{% endblock %}
 {% block content %}
 <h1>Cloud Storage</h1>
-<form method="POST" action="/api/upload" enctype="multipart/form-data">
-    <input type="file" name="file">
-    <input type="submit" value="Upload">
+<form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" name="files" multiple accept=".png, .jpg, .mp4">
+    <input type="button" value="Upload" onclick="uploadFiles()">
 </form>
-{% for folder in folder %}
-        <a href="/cms/media/{{folder}}">{{folder}}</a>
-    {%endfor%}
-<div style="display: flex;">
-    {% for file in files %}
-    <div style="display: flex;">
-        <img style="width: 100%; overflow:hidden; aspect-ratio: 1;" src="/api/get_img/upload{{pfad}}{{file}}">
-    </div>
-       
-    {%endfor%}
-    
-    
 
-</div>
+<script>
+    function uploadFiles() {
+    const input = document.querySelector('input[type="file"]');
+    const files = input.files;
+
+    let uploadedCount = 0; // Zähler für hochgeladene Dateien
+
+    for (let i = 0; i < files.length; i++) {
+        const formData = new FormData();
+        formData.append('file', files[i]);
+        const fileName = files[i].name;
+        const ext = fileName.split('.').pop().toLowerCase();
+        const allowedExtensions = ['png', 'jpg', 'mp4'];
+        const path = '{{pfad}}'; // Hier den Pfad einfügen
+        console.log(path)
+        if (!allowedExtensions.includes(ext)) {
+            alert('Die Datei ' + fileName + ' hat eine unzulässige Erweiterung.');
+            return;
+        }else{
+        formData.append('path', path); // Hinzufügen des Pfads zur FormData
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api/upload', true);
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                const response = xhr.responseText;
+                const fileInput = document.querySelector('input[type="file"]');
+                const uploadedFileName = fileInput.files[i].name;
+                highlightSuccessFile(uploadedFileName);
+
+                uploadedCount++; // Inkrementiere den Zähler für hochgeladene Dateien
+                if (uploadedCount === files.length) { // Überprüfe, ob alle Dateien hochgeladen wurden
+                    window.location.reload(); // Lade die Seite neu, wenn alle Dateien hochgeladen sind
+                }
+            } else {
+                console.error('Error while uploading file ' + i);
+            }
+        };
+
+        xhr.send(formData);}
+}
+}
+
+function highlightSuccessFile(fileName) {
+    const fileInputs = document.querySelectorAll('input[type="file"]');
+    fileInputs.forEach(function(input) {
+        if (input.files[0].name === fileName) {
+            input.style.backgroundColor = 'lightgreen';
+        }
+    });
+}
+
+</script>
+    <div style="display: flex; flex-wrap: wrap;  width: 100%;">
+        {% if not pfad == "/" %}
+        <div style="display: flex; width: calc(5% - 2px); margin-bottom: 10px;">
+            <div style="width: 100%; position: relative; display: block;">
+                <a id="back_button"  href="/cms/media/zurück" >
+                <img style="width: 100%; filter: hue-rotate(180deg);" src="/api/get_img/folder.png"><p style="text-align: center; margin-top: -15px;">Zurück</p></a>
+            </div>
+        </div>
+        {% endif %}
+        {% for folder in folder %}
+        <div style="display: flex; width: calc(5% - 2px); margin-bottom: 10px;">
+            <div style="width: 100%; position: relative; display: block;">
+                <a href="/cms/media{{pfad}}{{folder}}" >
+                <img style="width: 100%" src="/api/get_img/folder.png"><p style="text-align: center; margin-top: -15px;">{{folder}}</p></a>
+            </div>
+        </div>
+        {% if loop.index % 12 == 0 %}
+            <div style="width: 100%;"></div> <!-- Fügt eine neue Zeile nach jedem 12. Element ein -->
+        {% endif %}
+        {% endfor %}
+    </div>
+    <div style="display: flex; flex-wrap: wrap; width: 100%;">
+        {% for file in files %}
+        <div class="image-container" style="display: block; width: calc(15% - 2px); margin-bottom: 10px; margin-right: 10px;">
+            <a href="#" onclick="popup_triger('{{file}}')" style="width: 100%; padding-bottom: 56.25%; position: relative; overflow: hidden;">
+                <img class="popup-trigger" style="width: 100%; height: 100%; object-fit: cover;" src="/api/get_img/upload{{pfad}}{{file}}">
+                
+            </a>
+            <div id="popup-content_{{file}}" class="popup-content" style="display: none;">
+                <p>Hier ist der Popup-Inhalt.</p>
+            </div>
+        </div> 
+        
+       
+        
+        <script>
+            function popup_triger(file){
+                const popupContent = document.getElementById('popup-content_' + file);
+                popupContent.style.display = 'flex';
+            }
+        </script>
+        
+        
+        {% if loop.index % 12 == 0 %}
+            <div style="width: 100%;"></div> <!-- Fügt eine neue Zeile nach jedem 12. Element ein -->
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const path = window.location.pathname;
+            const segments = path.split('/cms')[1].split('/');
+            segments.pop();
+            const modifiedURL = '/cms' + segments.join('/');
+            const finalURL = modifiedURL.replace(/\/$/, ''); // Entfernt den letzten Schrägstrich
+            document.getElementById("back_button").setAttribute("href", finalURL);
+        });
+    </script>
+    
+    
 {% endblock %}
