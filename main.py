@@ -98,13 +98,17 @@ def edit_cms_header():
         return render_template("cms/header_edit.html", user_data = manager.get_user_data(session["username"]), module_content = module_content, pages =pages)
     else:
         return redirect("/login")
+@application.route("/cms/media/")
 @application.route("/cms/media/<path:pfad>")
 def media(pfad="/"):
-    # if authorited():
-    module_content, pages, module_templates = get_json()
-    return render_template("cms/cms_media.html", user_data = manager.get_user_data(session["username"]), module_content = module_content, pages =pages)
-    # else:
-    #     return redirect("/login")
+    if authorited():
+        dateien, ordner = liste_dateien_und_ordner(application.config['UPLOAD_FOLDER'] + pfad)
+        print(dateien, ordner)
+        
+        module_content, pages, module_templates = get_json()
+        return render_template("cms/cms_media.html", user_data = manager.get_user_data(session["username"]), module_content = module_content, pages =pages)
+    else:
+        return redirect("/login")
 @application.route("/logout")
 def logout():
     if "username" in session and "session_token" in session:
@@ -180,8 +184,7 @@ def api_change():
                     del data[page]
                     with open("json/pages.json", "w") as f:
                         json.dump(data, f, indent=1)
-                    return jsonify({"message": "Erfolgreich"}), 200
-                
+                    return jsonify({"message": "Erfolgreich"}), 200   
 
         elif where == "content.json":
             if page in module_content.keys():
@@ -331,6 +334,18 @@ def create_full_path(relative_path):
     current_directory = os.getcwd()  # Aktuelles Arbeitsverzeichnis
     full_path = current_directory  + relative_path
     return full_path
+def liste_dateien_und_ordner(pfad):
+    dateien = []
+    ordner = []
+
+    for element in os.listdir(pfad):
+        element_pfad = os.path.join(pfad, element)
+        if os.path.isfile(element_pfad):
+            dateien.append(element)
+        elif os.path.isdir(element_pfad):
+            ordner.append(element)
+
+    return dateien, ordner
 
 
 if __name__ == "__main__":
