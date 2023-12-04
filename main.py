@@ -69,7 +69,7 @@ def cms_page(page):
                                 get_upload_files = get_upload_files()
                                )
     else:
-            return redirect("/login")
+            return redirect(f"/login?cms/{page}")
 @application.route("/cms/create_page", methods=["GET","POST"])
 def create_page():
     if authorited():
@@ -90,14 +90,14 @@ def create_page():
         else:
             return render_template("cms/create_page.html", user_data = manager.get_user_data(session["username"]), module_content = module_content, pages =pages)
     else:
-         return redirect("/login")
+         return redirect("/login?cms/create_page")
 @application.route("/cms/header", methods=["GET","POST"])
 def edit_cms_header():
     if authorited():
         module_content, pages, module_templates = get_json()
         return render_template("cms/header_edit.html", user_data = manager.get_user_data(session["username"]), module_content = module_content, pages =pages)
     else:
-        return redirect("/login")
+        return redirect("/login?cms/header")
 @application.route("/cms/media/")
 @application.route("/cms/media/<path:pfad>")
 def media(pfad="/"):
@@ -108,7 +108,9 @@ def media(pfad="/"):
         module_content, pages, module_templates = get_json()
         return render_template("cms/cms_media.html", user_data = manager.get_user_data(session["username"]), module_content = module_content, pages =pages, files = dateien, folder = ordner, pfad = pfad)
     else:
-        return redirect("/login")
+        if not pfad == "/":
+            pfad = "/" + pfad
+        return redirect(f"/login?cms/media{pfad}")
 @application.route("/logout")
 def logout():
     if "username" in session and "session_token" in session:
@@ -366,5 +368,5 @@ def liste_dateien_und_ordner(pfad):
 
 
 if __name__ == "__main__":
-    application.run(host="0.0.0.0", debug=False, port=5000)
+    application.run(host="0.0.0.0", debug=True, port=5000)
  
