@@ -144,8 +144,17 @@ def login():
 def base():
     return render_template("base.html")
 @application.route("/api/get_img/<path:img>")
-def get_img(img):
-    return send_file(f"static/images/{img}")
+def send_image(img):
+    import os
+    images_folder = "static/images/"
+    requested_path = os.path.abspath(os.path.join(images_folder, img))
+
+    if os.path.isfile(requested_path) and requested_path.startswith(os.path.abspath(images_folder)):
+        return send_file(requested_path)
+    else:
+        print("Datei nicht gefunden oder nicht erlaubter Pfad.")
+        return "Datei nicht gefunden oder nicht erlaubter Pfad."
+
 @application.route("/api/header_change/", methods=["POST"])
 def api_header_change():
     module_content, pages, module_templates = get_json()
