@@ -5,8 +5,7 @@
         </div>
 
         <div style="display: flex; flex-wrap: wrap; justify-content: space-evenly;">
-            {% for x in module_content.keys() %}
-            
+            {% for x in module_content.keys() %}        
             <div style="flex-basis: calc(25% - 10px); box-sizing: border-box; margin: 5px;">
                 <h4>{{ x }}</h4>
                 {% if module_templates[x] == "text" %}
@@ -18,6 +17,9 @@
                 {% if module_templates[x] == "large_text" %}
                 <textarea id="input_{{module_id}}_{{x}}" name="input_{{module_id}}_{{x}}" cols="40" rows="auto" >{{module_content[x]}}</textarea>
                 {% endif %}
+                {% if module_templates[x] == "color" %}
+                <input type="color" id="input_{{module_id}}_{{x}}" name="input_{{module_id}}_{{x}}"  value="{{module_content[x]}}">
+                {% endif %}
                 {% if module_templates[x] == "img" %}
                 <select name="input_{{module_id}}_{{x}}" id="input_{{module_id}}_{{x}}">
                     <optgroup label="Upload Folder"></optgroup>
@@ -27,7 +29,6 @@
                     </optgroup>
                   </select>
                 {% endif %}
-                
                 <button onclick="send_data_input('{{module_id}}', '{{x}}')">change</button>
                 <script>
                     async function send_data_input(module_id, x){
@@ -58,7 +59,7 @@
         
 </div>
 <!--
-    
+
 {{module_id}}
 {{module_content}} 
     {{module_templates}} -->

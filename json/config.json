@@ -1,29 +1,32 @@
 {
-  "module_templates": {
-    "hero": {
-      "background_img": "img",
-      "title_1": "text",
-      "text_1": "large_text",
-      "link_text_1": "text",
-      "link_url_1": "url",
-      "title_2": "text",
-      "text_2": "large_text",
-      "link_text_2": "text",
-      "link_url_2": "url"
-    },
-    "about": {
-      "litle_text": "text",
-      "title": "text",
-      "title_text": "large_text"
-    },
-    "text_and_button": {
-      "title": "text",
-      "button_text": "text",
-      "button_url": "url"
-    }
+ "module_templates": {
+  "hero": {
+   "background_img": "img",
+   "title_1": "text",
+   "text_1": "large_text",
+   "background_color_1": "color",
+   "link_text_1": "text",
+   "link_url_1": "url",
+   "background_color_2": "color",
+   "title_2": "text",
+   "text_2": "large_text",
+   "link_text_2": "text",
+   "link_url_2": "url"
+  } ,
+  "about": {
+   "litle_text": "text",
+   "title": "text",
+   "title_text": "large_text"
   },
-  "delted_modules": [],
-  "temp": {
-    "Test": "a0926442819c60aa86b53933db8a334b3ed343d18cdfded5dee7ea08200af012678ab8e4421b938c9ee1cad7a45cf33e71aef97681240ae36b553fccabe15a87c164064378141ce5cce9ddbf92602a45e513dda396202b11db97ac5d669ee9658e00781b50cbbd65d95d9b3ce30d8171241a8fc8bca4d23195e88c180e56b64c"
+  "text_and_button": {
+   "title": "text",
+   "button_text": "text",
+   "button_url": "url"
   }
+ },
+ "delted_modules": [],
+ "temp": {
+  "Test": "36675f1065fc113f7be6482a3da66041ddd918732979ce43dcbbe88f8f32ef26ad06a8fa3eea319c78166313be741733eb5ac8abef3c8d128cc8fab0a7cc2242c75f4ae3f31db1dddfee50fb23111f5ab96a161b199b0879c136002fce1e84c00b8ebe8a064842393a6aacd9bfd1c788211fd54e273e903b5c2c1cdfab8281f8",
+  "t": "ede3b4c71c5a35c9447f1b36e853d5d7c5173d2d88ca291a9c63832591c455017d6fd6c5beaa18e59bfba75f04d549369a77b15884cd4bb5362afb0b0469c68377c28c8114a43f2029fb12007998e9e05d959cd978b915aa3cfb304f44bfd06957d29dcd4274b2ff8be7a89df536351e4d2571a552a5d50c604b5d0db539eeed"
+ }
 }

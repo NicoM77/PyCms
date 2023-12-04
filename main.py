@@ -147,7 +147,9 @@ def base():
     return render_template("base.html")
 @application.route("/api/get_img/<path:img>")
 def send_image(img):
-    import os
+    print(img)
+    if img =="upload/img":
+        img = "hero_default_background.jpg"
     images_folder = "static/images/"
     requested_path = os.path.abspath(os.path.join(images_folder, img))
 
