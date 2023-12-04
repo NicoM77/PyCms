@@ -149,7 +149,7 @@ def send_image(img):
     images_folder = "static/images/"
     requested_path = os.path.abspath(os.path.join(images_folder, img))
 
-    if os.path.isfile(requested_path) and requested_path.startswith(os.path.abspath(images_folder)):
+    if os.path.isfile(requested_path) and requested_path.startswith(os.path.abspath(images_folder)) and os.path.splitext(requested_path)[1].lower() in [".mp4", ".png", ".jpg",".webp"]:
         return send_file(requested_path)
     else:
         print("Datei nicht gefunden oder nicht erlaubter Pfad.")
