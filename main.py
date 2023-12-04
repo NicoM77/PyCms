@@ -275,7 +275,9 @@ def upload_file():
             return jsonify({"message": "successful"}), 200
         else:
             return jsonify({"message": "ERROR: File type not allowed"}), 400
-
+@application.route("/console")
+def console():
+    return redirect("/404")
 @application.route("/restart")
 def restart():
     open("restart", "w")
