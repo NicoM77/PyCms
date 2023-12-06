@@ -15,7 +15,6 @@ def home(page="home"):
     if not page_name == False:
         if not page_name == "Header":
             module_content, pages, module_templates = get_json()
-
             if page_name in pages.keys():
                 module_name = [list(d.keys())[0] for d in pages[page_name]["module"]]
                 module_id = [list(d.values())[0] for d in pages[page_name]["module"]]
@@ -54,6 +53,13 @@ def cms_page(page):
             if page_name in pages.keys():
                 module_name = [list(d.keys())[0] for d in pages[page_name]["module"]]
                 module_id = [list(d.values())[0] for d in pages[page_name]["module"]]
+            path = "static/images/"
+            
+            dateien, ordner = liste_dateien_und_ordner("static/images/")
+
+            media = {"home":dateien}
+            meida = files_in_dict("",media,ordner)
+
         return render_template("cms/cms_page.html",
                                 user_data = manager.get_user_data(session["username"]),
                                 page_route = page_route,
@@ -65,9 +71,8 @@ def cms_page(page):
                                 module_id = module_id,
                                 module_list_len = range(0,len(module_name)),
                                 module_templates = module_templates,
-
-                                get_upload_files = get_upload_files()
-                               )
+                                media = media,
+        )
     else:
             return redirect(f"/login?cms/{page}")
 @application.route("/cms/create_page", methods=["GET","POST"])
@@ -147,18 +152,20 @@ def base():
     return render_template("base.html")
 @application.route("/api/get_img/<path:img>")
 def send_image(img):
-    print(img)
     if img =="upload/img":
         img = "hero_default_background.jpg"
+    teile = img.split("/")
+    if "home" in teile:
+        teile.remove("home")
+        img = "/".join(teile)
     images_folder = "static/images/"
     requested_path = os.path.abspath(os.path.join(images_folder, img))
 
-    if os.path.isfile(requested_path) and requested_path.startswith(os.path.abspath(images_folder)) and os.path.splitext(requested_path)[1].lower() in [".mp4", ".png", ".jpg",".webp"]:
+    if os.path.isfile(requested_path) and requested_path.startswith(os.path.abspath(images_folder)) and os.path.splitext(requested_path)[1].lower() in [".mp4", ".png", ".jpg",".webp",".jpeg"]:
         return send_file(requested_path)
     else:
         print("Datei nicht gefunden oder nicht erlaubter Pfad.")
         return "Datei nicht gefunden oder nicht erlaubter Pfad."
-
 @application.route("/api/header_change/", methods=["POST"])
 def api_header_change():
     module_content, pages, module_templates = get_json()
@@ -198,7 +205,6 @@ def api_change():
                     with open("json/pages.json", "w") as f:
                         json.dump(data, f, indent=1)
                     return jsonify({"message": "Erfolgreich"}), 200   
-
         elif where == "content.json":
             if page in module_content.keys():
                 if key in module_content[page].keys():
@@ -301,7 +307,6 @@ def not_found(e):
 @application.errorhandler(500)
 def not_found_500(e):
     return render_template("404.html")
-
 def authorited():
     if "username" in session and "session_token" in session:
         if manager.authorized(session["username"],session["session_token"]) == True:
@@ -326,19 +331,6 @@ def get_json():
 
 
     return module_content, pages, module_templates
-def get_upload_files():
-    file_list = []
-    directory_path = create_full_path("/static/images/upload/")
-
-    if not os.path.exists(directory_path):
-        print(f"Das Verzeichnis {directory_path} existiert nicht.")
-        return file_list
-
-    for root, dirs, files in os.walk(directory_path):
-        for file in files:
-            file_list.append(file)
-
-    return file_list
 def modules_id_counter():
     with open("json/module_content.json") as f:
         module_content = json.load(f)
@@ -367,6 +359,19 @@ def liste_dateien_und_ordner(pfad):
             ordner.append(element)
 
     return dateien, ordner
+def files_in_dict(path, media, dict):
+    for ordner_one in dict:
+        if ordner_one != "user_profile":
+            dateien, ordner = liste_dateien_und_ordner("static/images"+path+"/"+ordner_one)
+            if path == "":
+                media[ordner_one] = dateien
+            else:
+                media[path[1:] +"/"+ ordner_one] = dateien
+            if not len(ordner) == 0:
+                media = files_in_dict(path +"/"+ ordner_one, media, ordner)
+            else:
+                return media
+    return media
 
 
 if __name__ == "__main__":

@@ -22,11 +22,13 @@
                 {% endif %}
                 {% if module_templates[x] == "img" %}
                 <select name="input_{{module_id}}_{{x}}" id="input_{{module_id}}_{{x}}">
-                    <optgroup label="Upload Folder"></optgroup>
-                    {% for img in get_upload_files %}
-                    <option value="{{img}}">{{img}}</option>
-                    {% endfor %}
+                    {% for dict in media.keys() %}
+                    <optgroup label="{{dict}} Folder"></optgroup>
+                        {% for img in media[dict] %}
+                            <option value="{{dict}}/{{img}}">{{img}}</option>
+                        {% endfor %}
                     </optgroup>
+                    {% endfor %}
                   </select>
                 {% endif %}
                 <button onclick="send_data_input('{{module_id}}', '{{x}}')">change</button>
