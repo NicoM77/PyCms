@@ -8,7 +8,10 @@
     "title_2": "TEST ETST",
     "text_2": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et",
     "link_text_2": "WILLIKOMEN auf meiner PAGE",
-    "link_url_2": "https://google.com"
+    "link_url_2": "https://google.com",
+    "background_color": "nothing",
+    "background_color_1": "nothing",
+    "background_color_2": "nothing"
   },
   "2": {
     "litle_text": "About MeeHoeihfousdhfuo",
@@ -29,7 +32,10 @@
     "title_2": "TEST ETST",
     "text_2": "GenerellGenerellG At vero eos et accusam et",
     "link_text_2": "WILLIKOMEN auf meiner PAGE",
-    "link_url_2": "https://google.com"
+    "link_url_2": "https://google.com",
+    "background_color": "nothing",
+    "background_color_1": "nothing",
+    "background_color_2": "nothing"
   },
   "5": {
     "litle_text": "About Mee",
@@ -50,6 +56,9 @@
     "title_2": "TEST ETST",
     "text_2": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et",
     "link_text_2": "WILLIKOMEN auf meiner PAGE",
-    "link_url_2": "https://google.com"
+    "link_url_2": "https://google.com",
+    "background_color": "nothing",
+    "background_color_1": "nothing",
+    "background_color_2": "nothing"
   }
 }
