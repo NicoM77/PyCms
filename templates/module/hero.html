@@ -1,4 +1,8 @@
+{% if "background_color" in module_content.keys() %}
+<section class="u-align-center u-clearfix u-section-1" id="carousel_08dc" style='background-color: {{ module_content["background_color"] }}'>
+  {% else %}
 <section class="u-align-center u-clearfix u-section-1" id="carousel_08dc">
+{% endif %}
     {% if "background_img" in module_content.keys() %}
     <img src="/api/get_img/{{module_content['background_img']}}" alt="" class="u-expanded-width u-image u-image-default u-image-1">
     {% else %}
@@ -60,7 +64,7 @@
                       <p class="u-text u-text-default u-text-4">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim</p>
                   {% endif %}
                   {% if "link_text_2" in module_content.keys() and "link_url_2" in module_content.keys() %}
-                  <a href="{{ module_content['link_url_1'] }}" class="u-border-2 u-border-no-left u-border-no-right u-border-no-top u-border-white u-btn u-btn-rectangle u-button-style u-none u-text-body-alt-color u-btn-1">{{ module_content['link_text_1'] }}</a>
+                  <a href="{{ module_content['link_url_2'] }}" class="u-border-2 u-border-no-left u-border-no-right u-border-no-top u-border-white u-btn u-btn-rectangle u-button-style u-none u-text-body-alt-color u-btn-1">{{ module_content['link_text_2'] }}</a>
                   {% endif %}
                 </div>
               </div>
