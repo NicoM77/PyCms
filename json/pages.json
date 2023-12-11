@@ -1,51 +1,49 @@
 {
- "Header": {
-  "route": "/header",
-  "icon": "fa-solid fa-desktop",
-  "list": [
-   {
-    "Startseite": "/"
-   },
-   {
-    "BAUM": "https://google.com"
-   }
-  ]
- },
- "Home": {
-  "route": "/home",
-  "icon": "fa-brands fa-font-awesome",
-  "show_header": true,
-  "show_footer": true,
-  "module": [
-   {
-    "hero": "1"
-   },
-   {
-    "about": "2"
-   },
-   {
-    "text_and_button": "3"
-   },
-   {
-    "hero": "7"
-   }
-  ]
- },
- "Homes": {
-  "route": "/test",
-  "icon": "fa-solid fa-desktop",
-  "show_header": true,
-  "show_footer": true,
-  "module": [
-   {
-    "hero": "4"
-   },
-   {
-    "about": "5"
-   },
-   {
-    "text_and_button": "6"
-   }
-  ]
- }
+  "Header": {
+    "route": "/header",
+    "icon": "fa-solid fa-desktop",
+    "background_color": "#ffffff",
+    "list": [
+      {
+        "Startseite": "/"
+      },
+      {
+        "BAUM": "https://google.com"
+      }
+    ]
+  },
+  "Home": {
+    "route": "/home",
+    "icon": "fa-brands fa-font-awesome",
+    "show_header": true,
+    "show_footer": true,
+    "module": [
+      {
+        "hero": "1"
+      },
+      {
+        "about": "2"
+      },
+      {
+        "text_and_button": "3"
+      }
+    ]
+  },
+  "Homes": {
+    "route": "/test",
+    "icon": "fa-solid fa-desktop",
+    "show_header": true,
+    "show_footer": true,
+    "module": [
+      {
+        "hero": "4"
+      },
+      {
+        "about": "5"
+      },
+      {
+        "text_and_button": "6"
+      }
+    ]
+  }
 }

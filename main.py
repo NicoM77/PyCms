@@ -165,7 +165,6 @@ def send_image(img):
     if os.path.isfile(requested_path) and requested_path.startswith(os.path.abspath(images_folder)) and os.path.splitext(requested_path)[1].lower() in [".mp4", ".png", ".jpg",".webp",".jpeg"]:
         return send_file(requested_path)
     else:
-        print("Datei nicht gefunden oder nicht erlaubter Pfad.")
         return "Datei nicht gefunden oder nicht erlaubter Pfad."
 @application.route("/api/header_change/", methods=["POST"])
 def api_header_change():
@@ -270,12 +269,8 @@ def api_delete():
                                 json.dump(pages, f, indent=2)
                             return jsonify({"message": "Erfolgreich","redirect":"reload"}), 200
         elif what == "Page":
-            print(1)
             if page_name in pages.keys():
-                print(pages[page_name]["route"])
-                print(module_id)
                 if pages[page_name]["route"] == module_id:
-                    print(1)
                     del pages[page_name]
                     with open("json/pages.json", "w") as f:
                         json.dump(pages, f, indent=2)
@@ -314,7 +309,6 @@ def upload_file():
         file = request.files['file']
         if file.filename == '':
             return jsonify({"message": "ERROR: No selected file"}), 400
-        print(file.filename.rsplit('.', 1)[1].lower() in {"png", "jpg", "mp4"})
         if '.' in file.filename and file.filename.rsplit('.', 1)[1].lower() in {"png", "jpg", "mp4"}:
             file.save(os.path.join(application.config['UPLOAD_FOLDER']+ path, file.filename))
             return jsonify({"message": "successful"}), 200

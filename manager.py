@@ -9,7 +9,6 @@ def login(name, pw):
         else:
             return False
     return False
-
 def temp_add_hash(username, hash):
     with open("json/config.json") as f:
        data = json.load(f)
@@ -21,7 +20,6 @@ def create_page(page_name:str, page_route:str, show_header:bool, show_footer:boo
         with open("json/pages.json") as f:
             pages = json.load(f)
         if not page_name in pages.keys():
-            print(1)
             pages[page_name] = {
                 "route":page_route,
                 "icon":"fa-regular fa-clock",
@@ -46,7 +44,6 @@ def get_user_data(username):
     with open("json/login_daten.json") as f:
         data = json.load(f)
     if username in data["login"].keys():
-        print(username)
         user = data["login"][username]
         user["username"] = username
         del user["pw"]
