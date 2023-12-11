@@ -140,7 +140,7 @@ def login():
             if login == False:
                 return jsonify({"message": "Ungültige Anmeldeinformationen"}), 400
             else:
-                session_token = os.urandom(128).hex()
+                session_token = os.urandom(2048).hex()
                 manager.temp_add_hash(username, session_token)
                 session["username"] = username
                 session["session_token"] = session_token
