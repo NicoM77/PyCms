@@ -24,6 +24,7 @@ def home(page="home"):
                 return render_template("index.html",
                                         module_content = module_content,
                                         page = pages[page_name],
+                                        pages =pages,
                                         page_name = page_name,
 
                                         module_name = module_name,
@@ -175,7 +176,7 @@ def api_header_change():
         if len(daten) > 0:
             pages["Header"]["list"] = daten
             with open("json/pages.json", "w") as f:
-                json.dump(pages, f, indent=1)
+                json.dump(pages, f, indent=2)
             return jsonify({"message": "Erfolgreich","redirect":"/cms"}), 200
         
         
@@ -192,18 +193,24 @@ def api_change():
         key = data.get("key")
         value = data.get("value")
         if where == "pages.json":
-            if page in pages.keys():
+            if page == "Header":
                 if key in pages[page].keys():
                     pages[page][key] = value
                     with open("json/pages.json", "w") as f:
-                        json.dump(pages, f, indent=1)
+                        json.dump(pages, f, indent=2)
+                    return jsonify({"message": "Erfolgreich"}), 200
+            elif page in pages.keys():
+                if key in pages[page].keys():
+                    pages[page][key] = value
+                    with open("json/pages.json", "w") as f:
+                        json.dump(pages, f, indent=2)
                     return jsonify({"message": "Erfolgreich"}), 200
                 if key == "page_name":
                     data = pages
                     data[value] = pages[page]
                     del data[page]
                     with open("json/pages.json", "w") as f:
-                        json.dump(data, f, indent=1)
+                        json.dump(data, f, indent=2)
                     return jsonify({"message": "Erfolgreich"}), 200   
         elif where == "content.json":
             if page in module_content.keys():
@@ -258,9 +265,9 @@ def api_delete():
                             config["delted_modules"].append(int(module_id))
                             config["delted_modules"] = sorted(config["delted_modules"])
                             with open("json/config.json", "w") as f:
-                                json.dump(config, f, indent=1)
+                                json.dump(config, f, indent=2)
                             with open("json/pages.json", "w") as f:
-                                json.dump(pages, f, indent=1)
+                                json.dump(pages, f, indent=2)
                             return jsonify({"message": "Erfolgreich","redirect":"reload"}), 200
         elif what == "Page":
             print(1)
@@ -271,13 +278,32 @@ def api_delete():
                     print(1)
                     del pages[page_name]
                     with open("json/pages.json", "w") as f:
-                        json.dump(pages, f, indent=1)
+                        json.dump(pages, f, indent=2)
                     return jsonify({"message": "Erfolgreich","redirect":"/cms"}), 200
 
 
         return jsonify({"message": "ERROR"}), 400
     except Exception as e:
          return jsonify({"message": str(e)}), 400
+@application.route("/api/properties", methods = ["GET","POST"])
+def api_reload():
+    module_content, pages, module_templates = get_json()
+    to_edit = []
+    for page in pages:
+        if not "Header" == page:
+            for module in range(0, len(pages[page]["module"])):
+                for module_name in pages[page]["module"][module].keys():
+                    module_id = pages[page]["module"][module][module_name]
+                    for properties in module_templates[module_name]:
+                        if not properties in module_content[module_id]:
+                            to_edit.append({module_id: properties})
+    for modul in range(0, len(to_edit)):
+        for modul_id in to_edit[modul]:
+            propertie = to_edit[modul][modul_id]
+            module_content[modul_id][propertie] = "nothing"
+            with open("json/module_content.json", "w") as f:
+                json.dump(module_content, f, indent=2)
+    return to_edit
 @application.route('/api/upload', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
