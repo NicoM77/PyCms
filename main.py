@@ -6,6 +6,7 @@ application.secret_key = os.urandom(128).hex()
 
 UPLOAD_FOLDER = 'static/images/upload'
 application.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+page_name = "nico.how"
 
 @application.route("/")
 @application.route("/<path:page>")
@@ -317,6 +318,26 @@ def upload_file():
 @application.route("/console")
 def console():
     return redirect("/404")
+@application.route("/sitemap")
+def sitemap():
+    module_content, pages, module_templates = get_json()
+    page_list = []
+    for page in pages.keys():
+        if not page == "Header":
+            page_list.append(pages[page]["route"])
+    try:
+        with open("static/sitemap.txt", 'w') as datei:
+            datei.write("https://"+page_name)
+            for page in page_list:
+                datei.write('\n' + "https://"+page_name+page)
+            datei.close()
+        return send_file("static/sitemap.txt")
+
+    except FileNotFoundError:
+        print("Die Datei wurde nicht gefunden.")
+        return send_file("static/sitemap.txt")
+
+
 @application.route("/restart")
 def restart():
     open("restart", "w")

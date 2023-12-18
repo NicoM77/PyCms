@@ -14,6 +14,9 @@
   },
   "Home": {
     "route": "/home",
+    "seo": {
+      "date": "2023-012-18T10:00:00+00:00"
+    },
     "icon": "fa-brands fa-font-awesome",
     "show_header": true,
     "show_footer": true,
@@ -31,6 +34,9 @@
   },
   "Homes": {
     "route": "/test",
+    "seo": {
+      "date": "2023-012-18T10:00:00+00:00"
+    },
     "icon": "fa-solid fa-desktop",
     "show_header": true,
     "show_footer": true,
