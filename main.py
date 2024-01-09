@@ -199,6 +199,7 @@ def api_change():
                     with open("json/pages.json", "w") as f:
                         json.dump(pages, f, indent=2)
                     return jsonify({"message": "Erfolgreich"}), 200
+                          
             elif page in pages.keys():
                 if key in pages[page].keys():
                     pages[page][key] = value
@@ -211,7 +212,12 @@ def api_change():
                     del data[page]
                     with open("json/pages.json", "w") as f:
                         json.dump(data, f, indent=2)
-                    return jsonify({"message": "Erfolgreich"}), 200   
+                    return jsonify({"message": "Erfolgreich"}), 200 
+                if key in ["seo_title", "seo_description"]:
+                    pages[page]["seo"]["".join(key.split("_")[1:])] = value 
+                    with open("json/pages.json", "w") as f:
+                        json.dump(pages, f, indent=2)
+                    return jsonify({"message": "Erfolgreich"}), 200  
         elif where == "content.json":
             if page in module_content.keys():
                 if key in module_content[page].keys():
@@ -336,8 +342,6 @@ def sitemap():
     except FileNotFoundError:
         print("Die Datei wurde nicht gefunden.")
         return send_file("static/sitemap.txt")
-
-
 @application.route("/restart")
 def restart():
     open("restart", "w")
@@ -413,7 +417,6 @@ def files_in_dict(path, media, dict):
             else:
                 return media
     return media
-
 
 if __name__ == "__main__":
     application.run(host="0.0.0.0", debug=True, port=5000)

@@ -15,7 +15,8 @@
   "Home": {
     "route": "/home",
     "seo": {
-      "date": "2023-012-18T10:00:00+00:00"
+      "title": "Home",
+      "description": "Software aus Leidenschaft"
     },
     "icon": "fa-brands fa-font-awesome",
     "show_header": true,
@@ -35,7 +36,8 @@
   "Homes": {
     "route": "/test",
     "seo": {
-      "date": "2023-012-18T10:00:00+00:00"
+      "title": "Homes",
+      "description": "Software aus leidenschaft"
     },
     "icon": "fa-solid fa-desktop",
     "show_header": true,

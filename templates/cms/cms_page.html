@@ -68,7 +68,7 @@
 
 
         </script>
-    <div id="container" style="height: 200px; border: 2px black solid;width: 100%;  padding: 10px; " >
+    <div id="container" style="border: 2px black solid;width: 100%;  padding: 10px; " >
         
         <div style="display: flex; justify-content: space-between; ">
             <div style="display: flex;">
@@ -234,6 +234,62 @@
                     });
                 });
             </script>
+        <div style="display: block; width: 100%;">
+            
+            <div style="display: flex;">
+                <div style="display: block; width: 50%;">
+                    <h3>SEO values</h3>
+                        <h4>Title</h4>
+                        <input id="input_page_seo_title" type="text" value="{{pages[page_name]['seo']['title']}}"> <button onclick="send_data_input_seo_title()">change</button>
+                        <script>
+                            async function send_data_input_seo_title(){
+                            var value = document.getElementById('input_page_seo_title').value
+                            var key = "seo_title"
+                            var where ="pages.json"
+                            var page = "{{page_name}}"
+                            var response = await fetch("/api/change/", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({ 
+                                    value,
+                                    key,
+                                    where,
+                                    page }),
+                            });
+
+                        }
+                        </script>
+                        <h4>Description</h4>
+                        <input id="input_page_seo_description" type="text" value="{{pages[page_name]['seo']['description']}}"> <button onclick="send_data_input_seo_description()">change</button>
+                        <script>
+                            async function send_data_input_seo_description(){
+                            var value = document.getElementById('input_page_seo_description').value
+                            var key = "seo_description"
+                            var where ="pages.json"
+                            var page = "{{page_name}}"
+                            var response = await fetch("/api/change/", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({ 
+                                    value,
+                                    key,
+                                    where,
+                                    page }),
+                            });
+
+                        }
+                        </script>
+                </div>
+                <div style="display: block; width: 50%; background-color: lightgray;">
+                    Noch platz für neues
+                </div>
+            </div>
+
+        </div>
     </div>
     <div style="display: flex; flex-direction: column; width: 100%; margin-bottom: 5%;">
     {% for modul_counter in module_list_len %}

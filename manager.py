@@ -23,6 +23,10 @@ def create_page(page_name:str, page_route:str, show_header:bool, show_footer:boo
             pages[page_name] = {
                 "route":page_route,
                 "icon":"fa-regular fa-clock",
+                "seo":{
+                    "title":"",
+                    "description":""
+                },
                 "show_header": show_header,
                 "show_footer": show_footer,
                 "module":[]
