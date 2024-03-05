@@ -1,29 +1,15 @@
 {
   "module_templates": {
     "hero": {
-      "background_img": "img",
-      "title_1": "text",
-      "text_1": "large_text",
-      "link_text_1": "text",
-      "link_url_1": "url",
-      "title_2": "text",
-      "text_2": "large_text",
-      "link_text_2": "text",
-      "link_url_2": "url"
-    },
-    "about": {
-      "litle_text": "text",
-      "title": "text",
-      "title_text": "large_text"
-    },
-    "text_and_button": {
-      "title": "text",
-      "button_text": "text",
-      "button_url": "url"
+      "title": "text"
     }
   },
-  "delted_modules": [],
+  "delted_modules": [
+    2,
+    3
+  ],
   "temp": {
-    "Test": "a0926442819c60aa86b53933db8a334b3ed343d18cdfded5dee7ea08200af012678ab8e4421b938c9ee1cad7a45cf33e71aef97681240ae36b553fccabe15a87c164064378141ce5cce9ddbf92602a45e513dda396202b11db97ac5d669ee9658e00781b50cbbd65d95d9b3ce30d8171241a8fc8bca4d23195e88c180e56b64c"
+    "Test": "535085a004a52e88058c9413a03f7b9d9a7cd79647dec05c2f50f8c8f0d5c21e7042684d8ee282db6c3ac2e17300c9ee8a2b83447e6a08a324b5dc2a521b1f502778b093b1230e7fbe691e9aa9a561773b67eddf507d77d2f0aa93d40edb943a901c23304768cde51a3d414a71e5743b2e3cdc17096c40df0a87f7f33b94e29a",
+    "t": "de514598d6374a68c9b9752f119dbd401522614d0e24c8f7a91e10ecaa68f26ef393ef68236174cd46ca4fd3d185f85ae4089f1d5a34afa0bb37b469620e38ddedd798adba39bed1c2ef89fce75ed5cf0489fa412f423760968a17155089d658207a4def6a7e09b83b0f1f455fff75a019792deb3032d3a3babf0596084135ee"
   }
 }

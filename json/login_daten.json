@@ -1,19 +1,7 @@
 {
     "login": {
-        "Test": {
-            "pw": "Test",
-            "user_profile": "software-developer-copy.jpg"
-        },
         "t": {
             "pw": "t",
-            "user_profile": "software-developer-copy.jpg"
-        },
-        "Gabriel": {
-            "pw": "Test",
-            "user_profile": "Toeff.png"
-        },
-        "Ardit": {
-            "pw": "Test",
             "user_profile": "software-developer-copy.jpg"
         }
     }

@@ -1,0 +1,66 @@
+<section class="u-align-center u-clearfix u-section-1" id="carousel_08dc">
+    {% if "background_img" in module_content.keys() %}
+    <img src="/api/get_img/upload/{{module_content['background_img']}}" alt="" class="u-expanded-width u-image u-image-default u-image-1">
+    {% else %}
+        
+    <img src="{{ url_for('static', filename='images/hero_default_background.jpg') }}" alt="" class="u-expanded-width u-image u-image-default u-image-1">
+    {% endif %}
+    <div class="u-clearfix u-gutter-42 u-layout-wrap u-layout-wrap-1">
+      <div class="u-layout">
+        <div class="u-layout-row">
+          <div class="u-size-30 u-size-60-md">
+            <div class="u-layout-col">
+              <div class="u-container-style u-hidden-md u-hidden-sm u-hidden-xs u-layout-cell u-left-cell u-size-40 u-layout-cell-1">
+                <div class="u-container-layout u-container-layout-1"></div>
+              </div>
+              <div class="u-container-style u-layout-cell u-left-cell u-palette-2-base u-size-20 u-layout-cell-2">
+                <div class="u-container-layout u-valign-middle u-container-layout-2">
+                  {% if "title_1" in module_content.keys() %}
+                      <h1 class="u-custom-font u-font-oswald u-text u-text-1">{{ module_content["title_1"] }}</h1>
+                  {% else %}
+                      <h1 class="u-custom-font u-font-oswald u-text u-text-1">Digital Art<br>&amp; Design Studio</h1>
+                  {% endif %}
+                  
+
+                  {% if "text_1" in module_content.keys() %}
+                  <p class="u-text u-text-default u-text-2">{{ module_content["text_1"] }}</p>
+                  {% else %}
+                      <p class="u-text u-text-default u-text-2">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim</p>
+                  {% endif %}
+                  {% if "link_text_1" in module_content.keys() and "link_url_1" in module_content.keys() %}
+                  <a href="{{ module_content['link_url_1'] }}" class="u-border-2 u-border-no-left u-border-no-right u-border-no-top u-border-white u-btn u-btn-rectangle u-button-style u-none u-text-body-alt-color u-btn-1">{{ module_content['link_text_1'] }}</a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="u-size-30 u-size-60-md">
+            <div class="u-layout-col">
+              <div class="u-align-left u-container-style u-layout-cell u-palette-2-dark-2 u-right-cell u-size-20 u-layout-cell-3">
+                <div class="u-container-layout u-container-layout-3">
+                  
+                  {% if "title_2" in module_content.keys() %}
+                      <h2 class="u-custom-font u-font-oswald u-text u-text-default u-text-3">{{ module_content["title_2"] }}</h2>
+                  {% else %}
+                  <h2 class="u-custom-font u-font-oswald u-text u-text-default u-text-3">TITLE TEXT 2</h2>
+                  {% endif %}
+
+                  {% if "text_1" in module_content.keys() %}
+                  <p class="u-text u-text-default u-text-4">{{ module_content["text_2"] }}</p>
+                  {% else %}
+                      <p class="u-text u-text-default u-text-4">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim</p>
+                  {% endif %}
+                  {% if "link_text_2" in module_content.keys() and "link_url_2" in module_content.keys() %}
+                  <a href="{{ module_content['link_url_1'] }}" class="u-border-2 u-border-no-left u-border-no-right u-border-no-top u-border-white u-btn u-btn-rectangle u-button-style u-none u-text-body-alt-color u-btn-1">{{ module_content['link_text_1'] }}</a>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="u-align-center u-container-style u-layout-cell u-right-cell u-size-40 u-layout-cell-4">
+                <div class="u-container-layout u-valign-top u-container-layout-4"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

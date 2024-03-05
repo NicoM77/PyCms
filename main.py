@@ -1,8 +1,10 @@
 from flask import Flask, render_template, abort, request, send_from_directory, url_for, redirect, session, send_file, jsonify, Response
 import json, requests, datetime, manager, os, random
 
+
 application = Flask(__name__)
 application.secret_key = os.urandom(128).hex()
+
 
 UPLOAD_FOLDER = 'static/images/upload'
 application.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -352,6 +354,7 @@ def liste_dateien_und_ordner(pfad):
             ordner.append(element)
 
     return dateien, ordner
+
 
 
 if __name__ == "__main__":
