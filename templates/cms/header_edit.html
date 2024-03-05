@@ -50,6 +50,28 @@
 </tr>
 </tbody>
 </table>
+
+<input type="color" id="input_header_color" name="input_header_color"  value='{{pages["Header"]["background_color"]}}'>
+<button onclick="send_data_input()">change</button>
+<script>
+    async function send_data_input(){
+    var value = document.getElementById("input_header_color").value
+    var key = "background_color"
+    var where ="pages.json"
+    var page = "Header"
+    var response = await fetch("/api/change/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ 
+            value,
+            key,
+            where,
+            page }),
+    });}
+    
+</script>
 <!-- <div style="display: flex; width: 50%; justify-content: space-evenly;">
     <h4>Header background-color</h4> <input type="color">
 </div> -->

@@ -141,7 +141,14 @@ function triggerShake() {
             body: JSON.stringify({ username, password }),
         });
         if (response.status === 200) {
+            var aktuelleURL = window.location.href;
+            var parameterTeil = aktuelleURL.split('?')[1];
+            if(parameterTeil != undefined){
+              console.log(parameterTeil)
+              window.location.href = "/"+ parameterTeil;
+            }else{
             window.location.href = "/cms";
+          }
         } else {
             if (response.status === 400) {
                 console.error("Ungültige Anmeldeinformationen");

@@ -9,7 +9,7 @@
 - [ ] Media Upload
 - [ ] Logo change
 - [ ] Seo Value edit
-- [ ] Password hashen
+- [x] Password hashen
 
 > ### @Jiron
 - [ ] Learn how to create Modules

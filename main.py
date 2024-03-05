@@ -8,6 +8,7 @@ application.secret_key = os.urandom(128).hex()
 
 UPLOAD_FOLDER = 'static/images/upload'
 application.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+page_name = "nico.how"
 
 @application.route("/")
 @application.route("/<path:page>")
@@ -17,7 +18,6 @@ def home(page="home"):
     if not page_name == False:
         if not page_name == "Header":
             module_content, pages, module_templates = get_json()
-
             if page_name in pages.keys():
                 module_name = [list(d.keys())[0] for d in pages[page_name]["module"]]
                 module_id = [list(d.values())[0] for d in pages[page_name]["module"]]
@@ -27,6 +27,7 @@ def home(page="home"):
                 return render_template("index.html",
                                         module_content = module_content,
                                         page = pages[page_name],
+                                        pages =pages,
                                         page_name = page_name,
 
                                         module_name = module_name,
@@ -56,6 +57,13 @@ def cms_page(page):
             if page_name in pages.keys():
                 module_name = [list(d.keys())[0] for d in pages[page_name]["module"]]
                 module_id = [list(d.values())[0] for d in pages[page_name]["module"]]
+            path = "static/images/"
+            
+            dateien, ordner = liste_dateien_und_ordner("static/images/")
+
+            media = {"home":dateien}
+            meida = files_in_dict("",media,ordner)
+
         return render_template("cms/cms_page.html",
                                 user_data = manager.get_user_data(session["username"]),
                                 page_route = page_route,
@@ -67,11 +75,10 @@ def cms_page(page):
                                 module_id = module_id,
                                 module_list_len = range(0,len(module_name)),
                                 module_templates = module_templates,
-
-                                get_upload_files = get_upload_files()
-                               )
+                                media = media,
+        )
     else:
-            return redirect("/login")
+            return redirect(f"/login?cms/{page}")
 @application.route("/cms/create_page", methods=["GET","POST"])
 def create_page():
     if authorited():
@@ -92,14 +99,14 @@ def create_page():
         else:
             return render_template("cms/create_page.html", user_data = manager.get_user_data(session["username"]), module_content = module_content, pages =pages)
     else:
-         return redirect("/login")
+         return redirect("/login?cms/create_page")
 @application.route("/cms/header", methods=["GET","POST"])
 def edit_cms_header():
     if authorited():
         module_content, pages, module_templates = get_json()
         return render_template("cms/header_edit.html", user_data = manager.get_user_data(session["username"]), module_content = module_content, pages =pages)
     else:
-        return redirect("/login")
+        return redirect("/login?cms/header")
 @application.route("/cms/media/")
 @application.route("/cms/media/<path:pfad>")
 def media(pfad="/"):
@@ -110,7 +117,9 @@ def media(pfad="/"):
         module_content, pages, module_templates = get_json()
         return render_template("cms/cms_media.html", user_data = manager.get_user_data(session["username"]), module_content = module_content, pages =pages, files = dateien, folder = ordner, pfad = pfad)
     else:
-        return redirect("/login")
+        if not pfad == "/":
+            pfad = "/" + pfad
+        return redirect(f"/login?cms/media{pfad}")
 @application.route("/logout")
 def logout():
     if "username" in session and "session_token" in session:
@@ -134,7 +143,7 @@ def login():
             if login == False:
                 return jsonify({"message": "Ungültige Anmeldeinformationen"}), 400
             else:
-                session_token = os.urandom(128).hex()
+                session_token = os.urandom(2048).hex()
                 manager.temp_add_hash(username, session_token)
                 session["username"] = username
                 session["session_token"] = session_token
@@ -146,8 +155,20 @@ def login():
 def base():
     return render_template("base.html")
 @application.route("/api/get_img/<path:img>")
-def get_img(img):
-    return send_file(f"static/images/{img}")
+def send_image(img):
+    if img =="upload/img":
+        img = "hero_default_background.jpg"
+    teile = img.split("/")
+    if "home" in teile:
+        teile.remove("home")
+        img = "/".join(teile)
+    images_folder = "static/images/"
+    requested_path = os.path.abspath(os.path.join(images_folder, img))
+
+    if os.path.isfile(requested_path) and requested_path.startswith(os.path.abspath(images_folder)) and os.path.splitext(requested_path)[1].lower() in [".mp4", ".png", ".jpg",".webp",".jpeg"]:
+        return send_file(requested_path)
+    else:
+        return "Datei nicht gefunden oder nicht erlaubter Pfad."
 @application.route("/api/header_change/", methods=["POST"])
 def api_header_change():
     module_content, pages, module_templates = get_json()
@@ -157,7 +178,7 @@ def api_header_change():
         if len(daten) > 0:
             pages["Header"]["list"] = daten
             with open("json/pages.json", "w") as f:
-                json.dump(pages, f, indent=1)
+                json.dump(pages, f, indent=2)
             return jsonify({"message": "Erfolgreich","redirect":"/cms"}), 200
         
         
@@ -174,20 +195,31 @@ def api_change():
         key = data.get("key")
         value = data.get("value")
         if where == "pages.json":
-            if page in pages.keys():
+            if page == "Header":
                 if key in pages[page].keys():
                     pages[page][key] = value
                     with open("json/pages.json", "w") as f:
-                        json.dump(pages, f, indent=1)
+                        json.dump(pages, f, indent=2)
+                    return jsonify({"message": "Erfolgreich"}), 200
+                          
+            elif page in pages.keys():
+                if key in pages[page].keys():
+                    pages[page][key] = value
+                    with open("json/pages.json", "w") as f:
+                        json.dump(pages, f, indent=2)
                     return jsonify({"message": "Erfolgreich"}), 200
                 if key == "page_name":
                     data = pages
                     data[value] = pages[page]
                     del data[page]
                     with open("json/pages.json", "w") as f:
-                        json.dump(data, f, indent=1)
-                    return jsonify({"message": "Erfolgreich"}), 200   
-
+                        json.dump(data, f, indent=2)
+                    return jsonify({"message": "Erfolgreich"}), 200 
+                if key in ["seo_title", "seo_description"]:
+                    pages[page]["seo"]["".join(key.split("_")[1:])] = value 
+                    with open("json/pages.json", "w") as f:
+                        json.dump(pages, f, indent=2)
+                    return jsonify({"message": "Erfolgreich"}), 200  
         elif where == "content.json":
             if page in module_content.keys():
                 if key in module_content[page].keys():
@@ -241,26 +273,41 @@ def api_delete():
                             config["delted_modules"].append(int(module_id))
                             config["delted_modules"] = sorted(config["delted_modules"])
                             with open("json/config.json", "w") as f:
-                                json.dump(config, f, indent=1)
+                                json.dump(config, f, indent=2)
                             with open("json/pages.json", "w") as f:
-                                json.dump(pages, f, indent=1)
+                                json.dump(pages, f, indent=2)
                             return jsonify({"message": "Erfolgreich","redirect":"reload"}), 200
         elif what == "Page":
-            print(1)
             if page_name in pages.keys():
-                print(pages[page_name]["route"])
-                print(module_id)
                 if pages[page_name]["route"] == module_id:
-                    print(1)
                     del pages[page_name]
                     with open("json/pages.json", "w") as f:
-                        json.dump(pages, f, indent=1)
+                        json.dump(pages, f, indent=2)
                     return jsonify({"message": "Erfolgreich","redirect":"/cms"}), 200
 
 
         return jsonify({"message": "ERROR"}), 400
     except Exception as e:
          return jsonify({"message": str(e)}), 400
+@application.route("/api/properties", methods = ["GET","POST"])
+def api_reload():
+    module_content, pages, module_templates = get_json()
+    to_edit = []
+    for page in pages:
+        if not "Header" == page:
+            for module in range(0, len(pages[page]["module"])):
+                for module_name in pages[page]["module"][module].keys():
+                    module_id = pages[page]["module"][module][module_name]
+                    for properties in module_templates[module_name]:
+                        if not properties in module_content[module_id]:
+                            to_edit.append({module_id: properties})
+    for modul in range(0, len(to_edit)):
+        for modul_id in to_edit[modul]:
+            propertie = to_edit[modul][modul_id]
+            module_content[modul_id][propertie] = "nothing"
+            with open("json/module_content.json", "w") as f:
+                json.dump(module_content, f, indent=2)
+    return to_edit
 @application.route('/api/upload', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
@@ -271,13 +318,32 @@ def upload_file():
         file = request.files['file']
         if file.filename == '':
             return jsonify({"message": "ERROR: No selected file"}), 400
-        print(file.filename.rsplit('.', 1)[1].lower() in {"png", "jpg", "mp4"})
         if '.' in file.filename and file.filename.rsplit('.', 1)[1].lower() in {"png", "jpg", "mp4"}:
             file.save(os.path.join(application.config['UPLOAD_FOLDER']+ path, file.filename))
             return jsonify({"message": "successful"}), 200
         else:
             return jsonify({"message": "ERROR: File type not allowed"}), 400
+@application.route("/console")
+def console():
+    return redirect("/404")
+@application.route("/sitemap")
+def sitemap():
+    module_content, pages, module_templates = get_json()
+    page_list = []
+    for page in pages.keys():
+        if not page == "Header":
+            page_list.append(pages[page]["route"])
+    try:
+        with open("static/sitemap.txt", 'w') as datei:
+            datei.write("https://"+page_name)
+            for page in page_list:
+                datei.write('\n' + "https://"+page_name+page)
+            datei.close()
+        return send_file("static/sitemap.txt")
 
+    except FileNotFoundError:
+        print("Die Datei wurde nicht gefunden.")
+        return send_file("static/sitemap.txt")
 @application.route("/restart")
 def restart():
     open("restart", "w")
@@ -288,7 +354,6 @@ def not_found(e):
 @application.errorhandler(500)
 def not_found_500(e):
     return render_template("404.html")
-
 def authorited():
     if "username" in session and "session_token" in session:
         if manager.authorized(session["username"],session["session_token"]) == True:
@@ -313,19 +378,6 @@ def get_json():
 
 
     return module_content, pages, module_templates
-def get_upload_files():
-    file_list = []
-    directory_path = create_full_path("/static/images/upload/")
-
-    if not os.path.exists(directory_path):
-        print(f"Das Verzeichnis {directory_path} existiert nicht.")
-        return file_list
-
-    for root, dirs, files in os.walk(directory_path):
-        for file in files:
-            file_list.append(file)
-
-    return file_list
 def modules_id_counter():
     with open("json/module_content.json") as f:
         module_content = json.load(f)
@@ -354,7 +406,19 @@ def liste_dateien_und_ordner(pfad):
             ordner.append(element)
 
     return dateien, ordner
-
+def files_in_dict(path, media, dict):
+    for ordner_one in dict:
+        if ordner_one != "user_profile":
+            dateien, ordner = liste_dateien_und_ordner("static/images"+path+"/"+ordner_one)
+            if path == "":
+                media[ordner_one] = dateien
+            else:
+                media[path[1:] +"/"+ ordner_one] = dateien
+            if not len(ordner) == 0:
+                media = files_in_dict(path +"/"+ ordner_one, media, ordner)
+            else:
+                return media
+    return media
 
 
 if __name__ == "__main__":
