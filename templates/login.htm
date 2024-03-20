@@ -133,7 +133,7 @@ function triggerShake() {
     var password = document.querySelector('input[name="password"]').value;
 
     try {
-        var response = await fetch("/login", {
+        var response = await fetch("/cms/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

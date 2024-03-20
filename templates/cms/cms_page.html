@@ -1,6 +1,12 @@
 {% extends "cms/cms_template.html" %} 
 {% block title %}Home{% endblock %}
 {% block content %}
+<script>
+    document.getElementById("pages").classList.add("active");
+    id = "{{page_name}}"
+    document.getElementById(id).classList.add("active");
+
+</script>
         <div id="delte_banner" style="display: none;" class="delte_banner">
             <h3>Delete <span id="delte_banner_what_title"></span>?</h3>
             <p>Are you sure you want to delete</p>

@@ -46,7 +46,7 @@ def cms():
         module_content, pages, module_templates = get_json()
         return render_template("cms/cms_home.html", user_data = manager.get_user_data(session["username"]), module_content = module_content, pages =pages )
     else:
-        return redirect("/login")
+        return redirect("/cms/login")
 @application.route("/cms/<path:page>")
 def cms_page(page):
     if authorited():
@@ -78,7 +78,7 @@ def cms_page(page):
                                 media = media,
         )
     else:
-            return redirect(f"/login?cms/{page}")
+            return redirect(f"/cms/login?cms/{page}")
 @application.route("/cms/create_page", methods=["GET","POST"])
 def create_page():
     if authorited():
@@ -99,14 +99,14 @@ def create_page():
         else:
             return render_template("cms/create_page.html", user_data = manager.get_user_data(session["username"]), module_content = module_content, pages =pages)
     else:
-         return redirect("/login?cms/create_page")
+         return redirect("/cms/login?cms/create_page")
 @application.route("/cms/header", methods=["GET","POST"])
 def edit_cms_header():
     if authorited():
         module_content, pages, module_templates = get_json()
         return render_template("cms/header_edit.html", user_data = manager.get_user_data(session["username"]), module_content = module_content, pages =pages)
     else:
-        return redirect("/login?cms/header")
+        return redirect("/cms/login?cms/header")
 @application.route("/cms/media/")
 @application.route("/cms/media/<path:pfad>")
 def media(pfad="/"):
@@ -119,7 +119,7 @@ def media(pfad="/"):
     else:
         if not pfad == "/":
             pfad = "/" + pfad
-        return redirect(f"/login?cms/media{pfad}")
+        return redirect(f"/cms/login?cms/media{pfad}")
 @application.route("/logout")
 def logout():
     if "username" in session and "session_token" in session:
@@ -130,7 +130,7 @@ def logout():
         manager.temp_add_hash(username, "logout")
         return redirect("/")
     return redirect("/")
-@application.route("/login",methods = ["GET","POST"])
+@application.route("/cms/login",methods = ["GET","POST"])
 def login():
     if request.method == "POST":
         data = request.json

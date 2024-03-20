@@ -35,6 +35,10 @@
  "Home": {
   "route": "/home",
   "icon": "fa-brands fa-font-awesome",
+  "seo": {
+    "title": "Home",
+    "description": "Software aus Leidenschaft"
+  },
   "show_header": true,
   "show_footer": true,
   "module": [
