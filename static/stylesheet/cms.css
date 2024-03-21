@@ -509,6 +509,7 @@ img {
 }
 
 .window-panel {
+   transition: all 0.5s ease;
    background-color: #19194a;
    position: relative;
    overflow-y: hidden;

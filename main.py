@@ -39,6 +39,8 @@ def home(page="home"):
                                         heder_list_len = range(0,len(heder_text_list))
                                     )
     return render_template("404.html")
+
+## CMS
 @application.route("/cms")
 @application.route("/cms/")
 def cms():
@@ -107,6 +109,13 @@ def edit_cms_header():
         return render_template("cms/header_edit.html", user_data = manager.get_user_data(session["username"]), module_content = module_content, pages =pages)
     else:
         return redirect("/cms/login?cms/header")
+@application.route("/cms/profile", methods=["GET","POST"])
+def edit_cms_profile():
+    if authorited():
+        module_content, pages, module_templates = get_json()
+        return render_template("cms/cms_profile.html", user_data = manager.get_user_data(session["username"]), module_content = module_content, pages =pages)
+    else:
+        return redirect("/cms/login?cms/header")
 @application.route("/cms/media/")
 @application.route("/cms/media/<path:pfad>")
 def media(pfad="/"):
@@ -120,7 +129,7 @@ def media(pfad="/"):
         if not pfad == "/":
             pfad = "/" + pfad
         return redirect(f"/cms/login?cms/media{pfad}")
-@application.route("/logout")
+@application.route("/cms/logout")
 def logout():
     if "username" in session and "session_token" in session:
         username = session["username"]
@@ -151,9 +160,6 @@ def login():
 
     else:
         return render_template("login.htm")
-@application.route("/base")
-def base():
-    return render_template("base.html")
 @application.route("/api/get_img/<path:img>")
 def send_image(img):
     if img =="upload/img":
@@ -227,7 +233,22 @@ def api_change():
                     with open("json/module_content.json", "w") as f:
                         json.dump(module_content, f, indent=2)
                     return jsonify({"message": "Erfolgreich"}), 200
-
+        elif where == "login_daten.json":
+            with open("json/login_daten.json") as f:
+                data = json.load(f)
+            if key =="email":
+                data["login"][page]["email"] = value
+                with open("json/login_daten.json", "w") as f:
+                    json.dump(data, f, indent=2)
+                return jsonify({"message": "Erfolgreich"}), 200
+            elif key =="username":
+                data["login"][value] = data["login"][page]
+                data["login"].pop(page)
+                with open("json/login_daten.json", "w") as f:
+                    json.dump(data, f, indent=2)
+                return jsonify({"message": "Erfolgreich"}), 200
+            
+            
         return jsonify({"message": "ERROR"}), 400
     except Exception as e:
         return jsonify({"message": str(e)}), 400

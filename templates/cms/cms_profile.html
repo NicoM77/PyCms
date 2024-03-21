@@ -1,0 +1,111 @@
+{% extends "cms/cms_template.html" %} 
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="Dashboard">
+    <div>
+      <svg class="profile" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" width="120" height="120" colors="#b2cba3,#e0df9f,#e7a83e,#9a736e,#ea525f" name="Babe Didrikson" size="80" class="avatar">
+        <mask id="mask__beam" maskUnits="userSpaceOnUse" x="0" y="0" width="36" height="36">
+          <rect width="36" height="36" rx="20" fill="white"></rect>
+        </mask>
+        <g mask="url(#mask__beam)" fill="transparent">
+          <rect width="36" height="36" rx="20" fill="#e7a83e"></rect>
+          <rect x="0" y="0" width="36" height="36" transform="translate(-5 9) rotate(249 18 18) scale(1)" fill="#ea525f" rx="36"></rect>
+          <g transform="translate(-1 4.5) rotate(9 18 18)">
+            <path d="M13,19 a1,0.75 0 0,0 10,0" fill="black"></path>
+            <rect x="10" y="14" width="1.5" height="2" rx="1" stroke="none" fill="black"></rect>
+            <rect x="24" y="14" width="1.5" height="2" rx="1" stroke="none" fill="black"></rect>
+          </g>
+        </g>
+      </svg>
+      <div class="container">
+        <h3>Username</h3>
+        <div class="inputs">
+          <input id="input_username" placeholder="Username" type="text" value="{{user_data['username']}}">
+          <button onclick="send_data_input()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M92.69,216H48a8,8,0,0,1-8-8V163.31a8,8,0,0,1,2.34-5.65L165.66,34.34a8,8,0,0,1,11.31,0L221.66,79a8,8,0,0,1,0,11.31L98.34,213.66A8,8,0,0,1,92.69,216Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="136" y1="64" x2="192" y2="120" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg></button>
+          <script>
+            async function send_data_input(){
+            var value = document.getElementById('input_username').value
+            var key = "username"
+            var where ="login_daten.json"
+            var page = "{{user_data['username']}}"
+            
+            var response = await fetch("/api/change/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ 
+                    value,
+                    key,
+                    where,
+                    page }),
+            });}
+            
+        </script>
+        </div>
+        <h3>E-Mail</h3>
+        <div class="inputs">
+          <input placeholder="E-Mail" type="E-Mail" value="{{user_data['email']}}">
+          <button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M92.69,216H48a8,8,0,0,1-8-8V163.31a8,8,0,0,1,2.34-5.65L165.66,34.34a8,8,0,0,1,11.31,0L221.66,79a8,8,0,0,1,0,11.31L98.34,213.66A8,8,0,0,1,92.69,216Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="136" y1="64" x2="192" y2="120" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg></button>
+        </div>
+        <h3>Password</h3>
+        <div class="inputs">
+          <input placeholder="password" type  ="password">
+          <button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M92.69,216H48a8,8,0,0,1-8-8V163.31a8,8,0,0,1,2.34-5.65L165.66,34.34a8,8,0,0,1,11.31,0L221.66,79a8,8,0,0,1,0,11.31L98.34,213.66A8,8,0,0,1,92.69,216Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="136" y1="64" x2="192" y2="120" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <style>
+  
+    .Dashboard{
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background-color: #efefef;
+    }
+    button{
+      width:13%;
+      margin-left: 2%;
+      
+    border: none;
+    }
+    .inputs{
+      
+      background-color: #efefef;
+    border-radius: 1rem;
+      overflow: hidden;
+      display: flex;
+      
+      border: 0.5px solid gray;
+      
+    }
+    input {
+    width: 100%;
+    border: none;
+    background-color: #efefef;
+    padding: 12px 20px;
+  }
+    .profile{
+      margin-bottom: -60px;
+    }
+    .container{
+      text-align: left;
+      padding: 16px 24px;
+      width: 25dvw;
+      min-width: 400px;
+      height: 400px;
+      background-color: #ffff;
+      border-radius: 1rem;
+      box-shadow:  5px 5px 15px 5px rgba(0,0,0,0.34);
+      border: 0.5px solid gray;
+    }
+  
+  </style>
+
+  
+{% endblock %}

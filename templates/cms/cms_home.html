@@ -1,7 +1,89 @@
 {% extends "cms/cms_template.html" %} 
 {% block title %}Home{% endblock %}
 {% block content %}
-<H1>TEST</H1>
+
+<div class="Dashboard">
+    <div>
+    <h1>Wellcome, {{user_data["username"]}}</h1>
+    <div class="container">
+      <!-- <div class="card">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M224,200v8a32,32,0,0,1-32,32H136" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M224,128H192a16,16,0,0,0-16,16v40a16,16,0,0,0,16,16h32V128a96,96,0,1,0-192,0v56a16,16,0,0,0,16,16H64a16,16,0,0,0,16-16V144a16,16,0,0,0-16-16H32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+        Support
+      </div> -->
+      <a href="mailto:info@nico.how" class="card">
+        <svg class="card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M224,200v8a32,32,0,0,1-32,32H136" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M224,128H192a16,16,0,0,0-16,16v40a16,16,0,0,0,16,16h32V128a96,96,0,1,0-192,0v56a16,16,0,0,0,16,16H64a16,16,0,0,0,16-16V144a16,16,0,0,0-16-16H32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+        <h3 class="card-title">Support</h3>
+        <p class="card-text">bei Fragen oder Problemen, melde dich bitte. Ich kann nur Bugs beheben, wenn ich davon weis.</p>
+      </a>
+      <a href="mailto:info@nico.how" class="card">
+        <svg  class="card-icon"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><rect x="32" y="80" width="160" height="128" rx="8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M64,80V56a8,8,0,0,1,8-8H216a8,8,0,0,1,8,8V168a8,8,0,0,1-8,8H192" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="32" y1="112" x2="192" y2="112" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>      <h3 class="card-title">Pages</h3>
+        <p class="card-text">Hier im Dashboard findest du alles, was du brauchst, um deine Website zu bearbeiten. Und wenn du es nicht findest, gibt es es wahrscheinlich nicht.</p>
+      </a>
+    </div>
+  </div>
+  </div>
+  
+  
+  <style>
+    .Dashboard{
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .container{
+      margin-top: 10rem;
+      display: flex;
+      width: 60dvw;
+    }
+    .card {
+        color: black;
+        text-decoration: none;
+    padding: 16px 24px;
+    margin: 16px 24px;
+    height: 300px;
+    width: 50%;
+    position: relative;
+    border: none;
+    box-shadow: 0 .5rem 1.5rem rgba(0,0,0,.15);
+    border: 2px solid transparent;
+    -webkit-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    z-index: 10;
+    h3.card-title {
+      font-weight: 700;
+      font-size: 1.3rem;
+    }
+    p {
+      font-size: 1rem;
+      line-height: 1.5;
+      margin-bottom: 72px;
+    }
+    .card-link {
+      position: absolute;
+      bottom: 18px;
+    }
+    &:hover {
+      -webkit-transform: translateY(-5px);
+    -ms-transform: translateY(-15px);
+    -o-transform: translateY(-15px);
+    transform: translateY(-15px);
+      box-shadow: 0 1rem 1.5rem rgba(0,0,0,.15);
+      cursor: pointer;
+    }
+    .card-icon {
+      width: 60px;
+      margin-bottom: 8px;
+      position: relative;
+      top: 0;
+      left: -12px;
+    }
+  }
+  
+  </style>
 
 
 <script>

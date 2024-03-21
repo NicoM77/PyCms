@@ -1,7 +1,11 @@
 {% extends "cms/cms_template.html" %} 
 {% block title %}Home{% endblock %}
 {% block content %}
+<script>
+    document.getElementById("pages").classList.add("active");
+    document.getElementById("Header").classList.add("active");
 
+</script>
 <script>
     function send_data(){
         var data = extractTableData()
