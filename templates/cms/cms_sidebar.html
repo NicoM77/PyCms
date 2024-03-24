@@ -8,7 +8,7 @@
         </svg>
         <span class="navigation-item-title">Dashboard</span>
       </a>
-      <a href="#" onclick="var sidebar = document.getElementById('pages_sidebar');if (sidebar.classList.contains('active')) {sidebar.classList.remove('active');} else {sidebar.classList.add('active');}" class="navigation-item" id="pages">
+      <a href="#" onclick="var windowPanels = document.querySelectorAll('.window-panel');var sidebar = document.getElementById('pages_sidebar');if (sidebar.classList.contains('active')) {sidebar.classList.remove('active');} else {windowPanels.forEach(function(panel) {if (panel.classList.contains('active')) {panel.classList.remove('active');}});sidebar.classList.add('active');}" class="navigation-item" id="pages">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M3.6 3H20.4C20.7314 3 21 3.26863 21 3.6V20.4C21 20.7314 20.7314 21 20.4 21H3.6C3.26863 21 3 20.7314 3 20.4V3.6C3 3.26863 3.26863 3 3.6 3Z" stroke="currentColor" stroke-width="1.5"></path>
           <path d="M9.75 9.75V21" stroke="currentColor" stroke-width="1.5"></path>
@@ -39,14 +39,12 @@
         <span class="navigation-item-title">Theme Settings</span>
 
       </a>
-      <a href="#" class="navigation-item navigation-item--notification">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M18 8.4C18 6.70261 17.3679 5.07475 16.2426 3.87452C15.1174 2.67428 13.5913 2 12 2C10.4087 2 8.88258 2.67428 7.75736 3.87452C6.63214 5.07475 6 6.70261 6 8.4C6 15.8667 3 18 3 18H21C21 18 18 15.8667 18 8.4Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-          <path d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-        </svg>
-        <span class="navigation-item-title">Notifications</span>
-
+      
+      <a href="#" onclick="var windowPanels = document.querySelectorAll('.window-panel');var sidebar = document.getElementById('json_sidebar');if (sidebar.classList.contains('active')) {sidebar.classList.remove('active');} else {windowPanels.forEach(function(panel) {if (panel.classList.contains('active')) {panel.classList.remove('active');}});sidebar.classList.add('active');}" class="navigation-item navigation-item--notification">
+        <svg width="24" height="24"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M80,40c-64,0,0,88-64,88,64,0,0,88,64,88" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M176,40c64,0,0,88,64,88-64,0,0,88-64,88" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+        <span class="navigation-item-title">JSON</span>
       </a>
+      
     </div>
     <div class="navigation-bottom">
       <a href="#" class="navigation-item">
@@ -90,4 +88,21 @@
       <button class="tree-branch-button">+</button>
     </div>
     {% endfor %}
+	</div>
+  <div id="json_sidebar" class="window-panel">
+		<h2 class="section-title">
+			JSON Dateien
+		</h2>
+		<div class="tree-branch-action">
+      <a id="config_json" href="/cms/json/config" class="tree-branch-link tree-branch-link--sub">config.json</a>
+    </div>
+    <div class="tree-branch-action">
+      <a id="clogin_json" href="/cms/json/login" class="tree-branch-link tree-branch-link--sub">login.json</a>
+    </div>
+    <div class="tree-branch-action">
+      <a id="module_content_json" href="/cms/json/module_content" class="tree-branch-link tree-branch-link--sub">module_content.json</a>
+    </div>
+    <div class="tree-branch-action">
+      <a id="pages_json" href="/cms/json/pages" class="tree-branch-link tree-branch-link--sub">pages.json</a>
+    </div>
 	</div>
