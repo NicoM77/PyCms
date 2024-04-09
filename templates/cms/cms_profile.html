@@ -3,20 +3,7 @@
 {% block content %}
 <div class="Dashboard">
     <div>
-      <svg class="profile" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" width="120" height="120" colors="#b2cba3,#e0df9f,#e7a83e,#9a736e,#ea525f" name="Babe Didrikson" size="80" class="avatar">
-        <mask id="mask__beam" maskUnits="userSpaceOnUse" x="0" y="0" width="36" height="36">
-          <rect width="36" height="36" rx="20" fill="white"></rect>
-        </mask>
-        <g mask="url(#mask__beam)" fill="transparent">
-          <rect width="36" height="36" rx="20" fill="#e7a83e"></rect>
-          <rect x="0" y="0" width="36" height="36" transform="translate(-5 9) rotate(249 18 18) scale(1)" fill="#ea525f" rx="36"></rect>
-          <g transform="translate(-1 4.5) rotate(9 18 18)">
-            <path d="M13,19 a1,0.75 0 0,0 10,0" fill="black"></path>
-            <rect x="10" y="14" width="1.5" height="2" rx="1" stroke="none" fill="black"></rect>
-            <rect x="24" y="14" width="1.5" height="2" rx="1" stroke="none" fill="black"></rect>
-          </g>
-        </g>
-      </svg>
+      <img class="profile" width="120" height="120"  src="https://source.boringavatars.com/beam/120/{{user_data['username']}}">
       <div class="container">
         <h3>Username</h3>
         <div class="inputs">
@@ -92,6 +79,8 @@
   }
     .profile{
       margin-bottom: -60px;
+      display: flex;
+      display: unset;
     }
     .container{
       text-align: left;

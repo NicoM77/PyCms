@@ -2,7 +2,7 @@
 {% block title %}Home{% endblock %}
 {% block content %}
 <h1>Cloud Storage</h1>
-<form id="uploadForm" enctype="multipart/form-data">
+<form style="position: absolute; top: 15px; right: 15px;" id="uploadForm" enctype="multipart/form-data">
     <input type="file" name="files" multiple accept=".png, .jpg, .mp4">
     <input type="button" value="Upload" onclick="uploadFiles()">
 </form>
@@ -61,20 +61,34 @@ function highlightSuccessFile(fileName) {
 }
 
 </script>
+<div class="breadcrumbs">
+    <a href="/cms/media"><svg xmlns="http://www.w3.org/2000/svg" fill="#000000" viewBox="0 0 256 256"><path d="M219.31,108.68l-80-80a16,16,0,0,0-22.62,0l-80,80A15.87,15.87,0,0,0,32,120v96a8,8,0,0,0,8,8H216a8,8,0,0,0,8-8V120A15.87,15.87,0,0,0,219.31,108.68ZM208,208H48V120l80-80,80,80Z"></path></svg> Home</a>
+    {% for pfad_item in pfad.split("/") %}
+    {% if not pfad_item == "" %}
+    <a href="/nigger"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path></svg> {{pfad_item}}</a>
+    {% endif %}
+    {% endfor %}
+</div>
+
     <div style="display: flex; flex-wrap: wrap;  width: 100%;">
+
         {% if not pfad == "/" %}
         <div style="display: flex; width: calc(5% - 2px); margin-bottom: 10px;">
             <div style="width: 100%; position: relative; display: block;">
-                <a id="back_button"  href="/cms/media/zurück" >
-                <img style="width: 100%; filter: hue-rotate(180deg);" src="/api/get_img/folder.png"><p style="text-align: center; margin-top: -15px;">Zurück</p></a>
+                <a id="back_button"  href="/cms/media/zurück" style="align-items: center;
+                display: flex;
+                flex-direction: column;" >
+                <img style="width: 100%; filter: hue-rotate(180deg);" src="/api/get_img/folder.png"><p style="text-align: center; margin-top: 0px;">Zurück</p></a>
             </div>
         </div>
         {% endif %}
         {% for folder in folder %}
         <div style="display: flex; width: calc(5% - 2px); margin-bottom: 10px;">
             <div style="width: 100%; position: relative; display: block;">
-                <a href="/cms/media{{pfad}}{{folder}}" >
-                <img style="width: 100%" src="/api/get_img/folder.png"><p style="text-align: center; margin-top: -15px;">{{folder}}</p></a>
+                <a href="/cms/media{{pfad}}{{folder}}"  style="align-items: center;
+                display: flex;
+                flex-direction: column;">
+                <img style="width: 100%" src="/api/get_img/folder.png"><p style="text-align: center; margin-top: 0px;">{{folder}}</p></a>
             </div>
         </div>
         {% if loop.index % 12 == 0 %}

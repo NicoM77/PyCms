@@ -8,7 +8,25 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet/cms.css') }}">
 </head>
 <body>
-
+    <script>
+        // Deaktiviere den Cache für alle HTTP-Anfragen
+        function disableCache() {
+            // Füge der URL ein zufälliges Query-Parameter hinzu, um den Cache zu verhindern
+            var randomParam = '?nocache=' + Math.random();
+                    
+            // Holen Sie alle Bilder auf der Seite
+            var images = document.getElementsByTagName('img');
+            for (var i = 0; i < images.length; i++) {
+                // Füge dem Src-Attribut ein zufälliges Query-Parameter hinzu
+                images[i].src += randomParam;
+            }
+        }
+        
+        // Führe die Funktion zum Deaktivieren des Caches aus, wenn das DOM vollständig geladen ist
+        window.onload = function() {
+            disableCache();
+        };
+    </script>
 
 <div style="display: flex; flex-direction: row; background-color: #efefef; ">
 
@@ -18,7 +36,7 @@
         {% endwith %}
 
 
-    <div style="display: block; width: 100%; height: 100vh; overflow-y: scroll;  padding: 1%; ">
+    <div style="display: block; width: 100%; height: 100vh; overflow-y: scroll;  padding: 1%; position: relative;">
         {% block content %} {% endblock %}
         
     </div>

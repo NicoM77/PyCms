@@ -1,50 +1,50 @@
 {
- "Header": {
-  "route": "/header",
-  "icon": "fa-solid fa-desktop",
-  "list": [
-   {
-    "Animation 1": "https://codepen.io/alphardex/pen/WNOoWWg"
-   },
-   {
-    "Animation 2": "https://codepen.io/rudtjd2548/pen/rNrxopK"
-   },
-   {
-    "Animation Page": "https://codepen.io/collection/DmWjdx?cursor=eyJwYWdlIjozMH0="
-   },
-   {
-    "Scroll Horizontal": "https://codepen.io/cameronknight/pen/qBNvrRQ"
-   },
-   {
-    "Section Scroll": "https://codepen.io/alexzhav/pen/Yzzxgqd"
-   },
-   {
-    "Not Very Cool Desing": "https://codepen.io/cobra_winfrey/pen/OJRjBoj"
-   },
-   {
-    "Lebenslauf": "https://codepen.io/tutsplus/pen/QNeJgR"
-   },
-   {
-    "Log In": "https://codepen.io/m2creates/pen/EEvGgW"
-   },
-   {
-    "CMS": "https://codepen.io/havardob/pen/PopKJRE"
-   }
-  ]
- },
- "Home": {
-  "route": "/home",
-  "icon": "fa-brands fa-font-awesome",
-  "seo": {
-    "title": "Home",
-    "description": "Software aus Leidenschaft"
+  "Header": {
+    "route": "/header",
+    "icon": "fa-solid fa-desktop",
+    "list": [
+      {
+        "Animation 1": "https://codepen.io/alphardex/pen/WNOoWWg"
+      },
+      {
+        "Animation 2": "https://codepen.io/rudtjd2548/pen/rNrxopK"
+      },
+      {
+        "Animation Page": "https://codepen.io/collection/DmWjdx?cursor=eyJwYWdlIjozMH0="
+      },
+      {
+        "Scroll Horizontal": "https://codepen.io/cameronknight/pen/qBNvrRQ"
+      },
+      {
+        "Section Scroll": "https://codepen.io/alexzhav/pen/Yzzxgqd"
+      },
+      {
+        "Not Very Cool Desing": "https://codepen.io/cobra_winfrey/pen/OJRjBoj"
+      },
+      {
+        "Lebenslauf": "https://codepen.io/tutsplus/pen/QNeJgR"
+      },
+      {
+        "Log In": "https://codepen.io/m2creates/pen/EEvGgW"
+      },
+      {
+        "CMS": "https://codepen.io/havardob/pen/PopKJRE"
+      }
+    ]
   },
-  "show_header": true,
-  "show_footer": true,
-  "module": [
-   {
-    "hero": "1"
-   }
-  ]
- }
+  "Home": {
+    "route": "/home",
+    "icon": "fa-brands fa-font-awesome",
+    "seo": {
+      "title": "Home",
+      "description": "Software aus Leidenschaft"
+    },
+    "show_header": true,
+    "show_footer": true,
+    "module": [
+      {
+        "hero": "1"
+      }
+    ]
+  }
 }
